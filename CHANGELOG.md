@@ -14,6 +14,7 @@
 - Paginate overdue appointments list
 - Fix instant search error views overlapping each other
 - Remove usage of deprecated constructor from `MobiusDelegate`
+- Migrate to Gradle version catalog
 
 ### Changes
 - Updated translations: `hi-IN`, `bn-BD`, `te-IN`, `bn-IN`, `am-ET`, `pa-IN`, `ti-ET`, `kn-IN`, `mr-IN`, `ta-IN`, `so-ET`, `om-ET`
