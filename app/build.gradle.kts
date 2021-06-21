@@ -76,7 +76,11 @@ tasks.withType<Test> {
 }
 
 android {
-  compileSdkVersion(versions.compileSdk)
+  val compileSdk: Int by rootProject.extra
+  val minSdk: Int by rootProject.extra
+  val targetSdk: Int by rootProject.extra
+
+  compileSdkVersion(compileSdk)
   // Needed to switch NDK versions on the CI server since they have different
   // NDK versions on macOS and Linux environments. Gradle plugin 3.6+ requires
   // us to pin an NDK version if we package native libs.
@@ -89,8 +93,8 @@ android {
 
   defaultConfig {
     applicationId = "org.simple.clinic"
-    minSdkVersion(versions.minSdk)
-    targetSdkVersion(versions.compileSdk)
+    minSdkVersion(minSdk)
+    targetSdkVersion(targetSdk)
     versionCode = 1
     versionName = "0.1"
     multiDexEnabled = true
@@ -316,37 +320,143 @@ android {
 }
 
 dependencies {
-  implementation(projects.router)
+  coreLibraryDesugaring(libs.desugaring)
+
   implementation(projects.mobiusBase)
+  implementation(projects.router)
   implementation(projects.simplePlatform)
   implementation(projects.simpleVisuals)
 
   lintChecks(projects.lint)
 
-  testImplementation(projects.mobiusMigration)
+  /**
+   * Debug dependencies
+   */
+  debugImplementation(libs.faker)
 
-  testImplementation("junit:junit:${versions.junit}")
-  testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:${versions.mockitoKotlin}")
-  testImplementation("pl.pragmatists:JUnitParams:${versions.junitParams}")
-  testImplementation("com.google.truth:truth:${versions.truth}")
-  testImplementation("com.github.blocoio:faker:${versions.faker}")
-  testImplementation("com.spotify.mobius:mobius-test:${versions.mobius}")
-  testImplementation("com.vinaysshenoy:quarantine-junit4:${versions.quarantine}")
+  debugImplementation(libs.flipper.flipper)
+  debugImplementation(libs.flipper.networkPlugin)
 
-  testRuntimeOnly("org.ow2.asm:asm:${versions.asm}") {
+  debugImplementation(libs.leakcanary)
+
+  debugImplementation(libs.soloader)
+
+  /**
+   * Prod dependencies
+   */
+  implementation(libs.androidx.annotation.annotation)
+  implementation(libs.androidx.annotation.experimental)
+  implementation(libs.androidx.appcompat)
+  implementation(libs.androidx.cardview)
+  implementation(libs.androidx.constraintlayout)
+  implementation(libs.androidx.core.ktx)
+  implementation(libs.androidx.fragment)
+  implementation(libs.androidx.recyclerview)
+  implementation(libs.androidx.viewpager2)
+
+  implementation(libs.bundles.androidx.camera)
+
+  implementation(libs.bundles.androidx.paging)
+
+  implementation(libs.bundles.androidx.room)
+  kapt(libs.androidx.room.compiler)
+
+  implementation(libs.bundles.androidx.work)
+
+  implementation(libs.bundles.moshi)
+  kapt(libs.moshi.codegen)
+
+  implementation(libs.bundles.okhttp)
+
+  implementation(libs.bundles.retrofit)
+
+  implementation(libs.bundles.rx.binding)
+
+  implementation(libs.dagger.dagger)
+  kapt(libs.dagger.compiler)
+
+  implementation(libs.edittext.masked)
+  implementation(libs.edittext.pinentry)
+
+  implementation(libs.firebase.config)
+  implementation(libs.firebase.performance.perf)
+
+  implementation(libs.flow)
+
+  implementation(libs.itemanimators)
+
+  runtimeOnly(libs.jackson.core)
+
+  implementation(libs.jbcrypt)
+
+  implementation(libs.kotlin.coroutines)
+  implementation(libs.kotlin.stdlib)
+
+  implementation(libs.logback.classic)
+
+  implementation(libs.lottie)
+
+  implementation(libs.material)
+
+  implementation(libs.mixpanel.android)
+
+  implementation(libs.okhttp.interceptor.logging)
+
+  implementation(libs.play.core)
+  implementation(libs.play.services.auth)
+  implementation(libs.play.services.location)
+  implementation(libs.play.services.mlkit.barcode)
+
+  implementation(libs.rootbeer)
+
+  implementation(libs.rx.android)
+  implementation(libs.rx.java)
+  implementation(libs.rx.kotlin)
+  implementation(libs.rx.preferences)
+
+  implementation(libs.sentry.android) {
+    exclude(group = "com.fasterxml.jackson.core", module = "jackson-core")
+  }
+
+  implementation(libs.signaturepad)
+
+  implementation(libs.sqlite.android)
+
+  implementation(libs.threeten.extra)
+
+  implementation(libs.traceur)
+
+  implementation(libs.uuid.generator)
+
+  implementation(libs.viewpump)
+
+  implementation(libs.zxing)
+
+  /**
+   * Unit test dependencies
+   */
+  testRuntimeOnly(libs.asm) {
     because("not mandatory, but Truth recommends adding this dependency for better error reporting")
   }
 
-  androidTestImplementation("androidx.annotation:annotation:${versions.annotation}")
+  testImplementation(projects.mobiusMigration)
 
-  androidTestImplementation("androidx.test:runner:${versions.androidXTest}")
-  androidTestImplementation("androidx.test:rules:${versions.androidXTest}")
-  androidTestImplementation("androidx.test.ext:junit:${versions.androidXTestExt}")
+  testImplementation(libs.androidx.paging.common)
 
-  androidTestImplementation("com.google.truth:truth:${versions.truth}")
-  androidTestImplementation("com.github.blocoio:faker:${versions.faker}")
-  androidTestImplementation("androidx.room:room-testing:${versions.room}")
-  androidTestImplementation("androidx.arch.core:core-testing:${versions.coreTesting}") {
+  testImplementation(libs.mobius.test)
+
+  testImplementation(libs.junit)
+  testImplementation(libs.junitParams)
+  testImplementation(libs.mockito.kotlin)
+  testImplementation(libs.truth)
+  testImplementation(libs.faker)
+  testImplementation(libs.quarantine)
+
+  /**
+   * Android test dependencies
+   */
+  androidTestImplementation(libs.androidx.annotation.annotation)
+  androidTestImplementation(libs.androidx.archCoreTesting) {
     // This dependency transitively pulls in a newer version of Mockito than Mockito-Kotlin does.
     // This results in the import statements in the unit tests breaking for mockito methods because
     // the IDE uses the version of Mockito that is present in the classpath from the androidTest
@@ -354,114 +464,23 @@ dependencies {
     // it from this dependency because it is also pulled in via mockito-kotlin.
     exclude(group = "org.mockito", module = "mockito-core")
   }
-  androidTestImplementation("com.vinaysshenoy:quarantine-junit4:${versions.quarantine}") {
-    exclude(group = "com.fasterxml.jackson.core", module = "jackson-core")
-  }
+  androidTestImplementation(libs.androidx.room.testing)
 
-  androidTestRuntimeOnly("org.ow2.asm:asm:${versions.asm}") {
+  androidTestImplementation(libs.bundles.androidx.test)
+
+  androidTestRuntimeOnly(libs.asm) {
     because("not mandatory, but Truth recommends adding this dependency for better error reporting")
   }
 
-  kaptAndroidTest("com.google.dagger:dagger-compiler:${versions.dagger}")
+  androidTestImplementation(libs.faker)
 
-  debugImplementation("com.github.blocoio:faker:${versions.faker}")
-  debugImplementation("com.facebook.flipper:flipper:${versions.flipper}")
-  debugImplementation("com.facebook.flipper:flipper-network-plugin:${versions.flipper}")
-  debugImplementation("com.facebook.soloader:soloader:${versions.soloader}")
-  debugImplementation("com.squareup.leakcanary:leakcanary-android:${versions.leakCanary}")
-
-  implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}")
-
-  implementation("androidx.annotation:annotation:${versions.annotation}")
-  implementation("androidx.annotation:annotation-experimental:${versions.annotationExperimental}")
-
-  implementation("androidx.recyclerview:recyclerview:${versions.recyclerView}")
-  implementation("com.google.android.material:material:${versions.material}")
-  implementation("androidx.cardview:cardview:${versions.cardview}")
-  implementation("androidx.constraintlayout:constraintlayout:${versions.constraintLayout}")
-  implementation("androidx.room:room-runtime:${versions.room}")
-  kapt("androidx.room:room-compiler:${versions.room}")
-  implementation("androidx.room:room-rxjava2:${versions.room}")
-  implementation("com.google.android.gms:play-services-location:${versions.playServicesLocation}")
-  implementation("com.google.firebase:firebase-config:${versions.firebaseConfig}")
-  implementation("com.google.firebase:firebase-perf:${versions.firebasePerformance}")
-
-  implementation("androidx.camera:camera-core:${versions.camerax}")
-  implementation("androidx.camera:camera-camera2:${versions.camerax}")
-  implementation("androidx.camera:camera-view:${versions.cameraView}")
-  implementation("androidx.camera:camera-lifecycle:${versions.cameraLifecycle}")
-
-  implementation("com.google.zxing:core:${versions.zxing}")
-
-  implementation("androidx.paging:paging-runtime-ktx:${versions.paging}")
-  implementation("androidx.paging:paging-rxjava2-ktx:${versions.paging}")
-
-  implementation("com.google.dagger:dagger:${versions.dagger}")
-  kapt("com.google.dagger:dagger-compiler:${versions.dagger}")
-
-  implementation("io.reactivex.rxjava2:rxjava:${versions.rxJava}")
-  implementation("io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}")
-  implementation("com.jakewharton.rxbinding3:rxbinding:${versions.rxBinding3}")
-  implementation("com.jakewharton.rxbinding3:rxbinding-recyclerview:${versions.rxBinding3}")
-  implementation("com.jakewharton.rxbinding3:rxbinding-appcompat:${versions.rxBinding3}")
-  implementation("io.reactivex.rxjava2:rxkotlin:${versions.rxKotlin}")
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-rx2:${versions.coroutines}")
-
-  implementation("com.squareup.retrofit2:retrofit:${versions.retrofit}")
-  implementation("com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}")
-  implementation("com.squareup.retrofit2:converter-moshi:${versions.retrofit}")
-  implementation("com.squareup.retrofit2:converter-scalars:${versions.retrofit}")
-  implementation("com.squareup.okhttp3:logging-interceptor:${versions.okLoggingInterceptor}")
-  implementation("com.squareup.moshi:moshi:${versions.moshi}")
-  kapt("com.squareup.moshi:moshi-kotlin-codegen:${versions.moshi}")
-  implementation("com.squareup.moshi:moshi-adapters:${versions.moshi}")
-  implementation("com.f2prateek.rx.preferences2:rx-preferences:${versions.rxPreference}")
-  implementation("com.github.qoqa:Traceur:${versions.traceur}")
-  implementation("ru.egslava:MaskedEditText:${versions.maskedEditText}")
-  implementation("io.sentry:sentry-android:${versions.sentry}") {
+  androidTestImplementation(libs.quarantine) {
     exclude(group = "com.fasterxml.jackson.core", module = "jackson-core")
   }
 
-  implementation("com.mikepenz:itemanimators:${versions.itemAnimators}")
-  implementation("org.mindrot:jbcrypt:${versions.jbcrypt}")
-  implementation("com.squareup.flow:flow:${versions.flow}")
-  implementation("com.github.requery:sqlite-android:${versions.sqliteAndroid}")
+  androidTestImplementation(libs.truth)
 
-  implementation("com.google.android.gms:play-services-auth:${versions.playServicesAuth}")
-  implementation("io.github.inflationx:viewpump:${versions.viewPump}")
-  implementation("com.alimuzaffar.lib:pinentryedittext:${versions.pinEntryEditText}")
-
-  implementation("com.google.android.play:core:${versions.playCore}")
-
-  implementation("com.simplecityapps:recyclerview-fastscroll:${versions.fastScroll}")
-  implementation("com.mixpanel.android:mixpanel-android:${versions.mixpanel}")
-
-  implementation("androidx.work:work-runtime:${versions.workManager}")
-  implementation("androidx.work:work-gcm:${versions.workManager}")
-
-  implementation("com.fasterxml.uuid:java-uuid-generator:${versions.uuidGenerator}")
-
-  runtimeOnly("com.fasterxml.jackson.core:jackson-core:${versions.jackson}")
-  implementation("ch.qos.logback:logback-classic:${versions.logback}")
-
-  implementation("androidx.appcompat:appcompat:${versions.appcompat}")
-  implementation("com.airbnb.android:lottie:${versions.lottie}")
-
-  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:${versions.desugarJdk}")
-
-  implementation("com.github.gcacace:signature-pad:${versions.signaturePad}")
-
-  implementation("androidx.viewpager2:viewpager2:${versions.viewpager2}")
-
-  implementation("com.scottyab:rootbeer-lib:${versions.rootbeer}")
-
-  implementation("com.google.android.gms:play-services-mlkit-barcode-scanning:${versions.mlKitBarcode}")
-
-  implementation("androidx.fragment:fragment-ktx:${versions.fragment}")
-
-  implementation("androidx.core:core-ktx:${versions.androidXCoreKtx}")
-
-  implementation("org.threeten:threeten-extra:${versions.threetenExtra}")
+  kaptAndroidTest(libs.dagger.compiler)
 }
 
 // This must always be present at the bottom of this file, as per:

@@ -4,11 +4,15 @@ plugins {
 }
 
 android {
-  compileSdkVersion(versions.compileSdk)
+  val compileSdk: Int by rootProject.extra
+  val minSdk: Int by rootProject.extra
+  val targetSdk: Int by rootProject.extra
+
+  compileSdkVersion(compileSdk)
 
   defaultConfig {
-    minSdkVersion(versions.minSdk)
-    targetSdkVersion(versions.compileSdk)
+    minSdkVersion(minSdk)
+    targetSdkVersion(targetSdk)
     versionCode = 1
     versionName = "0.1"
 
@@ -27,9 +31,11 @@ android {
 }
 
 dependencies {
-  implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}")
-  implementation("io.reactivex.rxjava2:rxjava:${versions.rxJava}")
+  implementation(libs.kotlin.stdlib)
 
-  testImplementation("junit:junit:${versions.junit}")
-  testImplementation("com.google.truth:truth:${versions.truth}")
+  implementation(libs.rx.java)
+
+  testImplementation(libs.junit)
+
+  testImplementation(libs.truth)
 }

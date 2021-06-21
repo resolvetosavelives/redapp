@@ -4,14 +4,13 @@ plugins {
 }
 
 dependencies {
-  compileOnly("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}")
+  compileOnly(libs.kotlin.stdlib)
 
   // Lint
-  compileOnly("com.android.tools.lint:lint-api:${versions.lint}")
-  compileOnly("com.android.tools.lint:lint-checks:${versions.lint}")
+  compileOnly(libs.bundles.lint)
 
   // Testing
-  testImplementation("com.android.tools.lint:lint:${versions.lint}")
-  testImplementation("com.android.tools.lint:lint-tests:${versions.lint}")
-  testImplementation("junit:junit:${versions.junit}")
+  testImplementation(libs.lint.tests)
+
+  testImplementation(libs.junit)
 }

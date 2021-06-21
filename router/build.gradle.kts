@@ -5,11 +5,15 @@ plugins {
 }
 
 android {
-  compileSdkVersion(versions.compileSdk)
+  val compileSdk: Int by rootProject.extra
+  val minSdk: Int by rootProject.extra
+  val targetSdk: Int by rootProject.extra
+
+  compileSdkVersion(compileSdk)
 
   defaultConfig {
-    minSdkVersion(versions.minSdk)
-    targetSdkVersion(versions.compileSdk)
+    minSdkVersion(minSdk)
+    targetSdkVersion(targetSdk)
     versionCode = 1
     versionName = "1.0"
   }
@@ -22,13 +26,18 @@ android {
 }
 
 dependencies {
-  implementation("androidx.appcompat:appcompat:${versions.supportLib}")
-  implementation("com.squareup.flow:flow:${versions.flow}")
-  implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}")
-  implementation("io.reactivex.rxjava2:rxjava:${versions.rxJava}")
-  implementation("com.jakewharton.timber:timber:${versions.timber}")
+  implementation(libs.androidx.appcompat)
 
-  testImplementation("junit:junit:${versions.junit}")
-  testImplementation("pl.pragmatists:JUnitParams:${versions.junitParams}")
-  testImplementation("com.google.truth:truth:${versions.truth}")
+  implementation(libs.flow)
+
+  implementation(libs.kotlin.stdlib)
+
+  implementation(libs.rx.java)
+
+  implementation(libs.timber)
+
+  testImplementation(libs.junit)
+  testImplementation(libs.junitParams)
+
+  testImplementation(libs.truth)
 }

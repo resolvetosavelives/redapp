@@ -1,0 +1,201 @@
+[versions]
+androidx-camera = "1.0.0-rc04"
+androidx-cameraView = "1.0.0-alpha23"
+androidx-paging = "3.0.0"
+androidx-room = "2.3.0"
+androidx-test = "1.2.0"
+androidx-work = "2.5.0"
+
+dagger = "2.35.1"
+
+flipper = "0.37.0"
+
+kotlin = "1.5.10"
+
+ktlint = "0.36.0"
+
+lint = "27.1.1"
+
+mobius = "1.5.3"
+
+moshi = "1.12.0"
+
+okhttp = "4.9.1"
+
+retrofit = "2.9.0"
+
+room-metadataGenerator = "1.2.0"
+
+rx-binding = "3.1.0"
+
+spotless = "5.6.1"
+
+[libraries]
+android-gradle-plugin = "com.android.tools.build:gradle:4.2.1"
+
+androidx-annotation-annotation = "androidx.annotation:annotation:1.2.0"
+androidx-annotation-experimental = "androidx.annotation:annotation-experimental:1.1.0"
+
+# When bumping this dependency verify whether `org.simple.clinic.feature.Feature.ChangeLanguage`
+# can be enabled again.
+androidx-appcompat = "androidx.appcompat:appcompat:1.2.0"
+
+androidx-archCoreTesting = "androidx.arch.core:core-testing:2.0.0"
+androidx-cardview = "androidx.cardview:cardview:1.0.0"
+androidx-constraintlayout = "androidx.constraintlayout:constraintlayout:2.0.4"
+androidx-core-ktx = "androidx.core:core-ktx:1.3.2"
+androidx-fragment = "androidx.fragment:fragment-ktx:1.2.5"
+androidx-recyclerview = "androidx.recyclerview:recyclerview:1.0.0"
+androidx-viewpager2 = "androidx.viewpager2:viewpager2:1.0.0"
+
+androidx-camera-core = { module = "androidx.camera:camera-core", version.ref = "androidx-camera" }
+androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "androidx-camera" }
+androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "androidx-cameraView" }
+androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "androidx-camera" }
+
+androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "androidx-paging" }
+androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "androidx-paging" }
+androidx-paging-rx2 = { module = "androidx.paging:paging-rxjava2", version.ref = "androidx-paging" }
+
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidx-room" }
+androidx-room-rx2 = { module = "androidx.room:room-rxjava2", version.ref = "androidx-room" }
+androidx-room-testing = { module = "androidx.room:room-testing", version.ref = "androidx-room" }
+
+androidx-test-junit = "androidx.test.ext:junit:1.1.1"
+androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }
+androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx-test" }
+
+androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "androidx-work" }
+androidx-work-gcm = { module = "androidx.work:work-gcm", version.ref = "androidx-work" }
+
+asm = "org.ow2.asm:asm:7.2"
+
+dagger-dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
+dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+
+desugaring = "com.android.tools:desugar_jdk_libs:1.0.9"
+
+edittext-masked = "ru.egslava:MaskedEditText:1.0.5"
+edittext-pinentry = "com.alimuzaffar.lib:pinentryedittext:2.0.6"
+
+faker = "com.github.blocoio:faker:1.2.8"
+
+firebase-config = "com.google.firebase:firebase-config:19.2.0"
+firebase-performance-perf = "com.google.firebase:firebase-perf:19.0.8"
+firebase-performance-plugin = "com.google.firebase:perf-plugin:1.3.1"
+
+flipper-flipper = { module = "com.facebook.flipper:flipper", version.ref = "flipper" }
+flipper-networkPlugin = { module = "com.facebook.flipper:flipper-network-plugin", version.ref = "flipper" }
+
+flow = "com.squareup.flow:flow:1.0.0-alpha3"
+
+google-services = "com.google.gms:google-services:4.3.3"
+
+guava = "com.google.guava:guava:28.1-jre"
+
+itemanimators = "com.mikepenz:itemanimators:1.0.2"
+
+jackson-core = "com.fasterxml.jackson.core:jackson-core:2.10.2"
+
+jbcrypt = "org.mindrot:jbcrypt:0.3m"
+
+junit = "junit:junit:4.13.2"
+junitParams = "pl.pragmatists:JUnitParams:1.1.1"
+
+kotlin-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.5.0"
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlin" }
+
+leakcanary = "com.squareup.leakcanary:leakcanary-android:2.6"
+
+lint-api = { module = "com.android.tools.lint:lint-api", version.ref = "lint" }
+lint-checks = { module = "com.android.tools.lint:lint-checks", version.ref = "lint" }
+lint-tests = { module = "com.android.tools.lint:lint-tests", version.ref = "lint" }
+
+logback-classic = "ch.qos.logback:logback-classic:1.2.3"
+
+lottie = "com.airbnb.android:lottie:3.4.0"
+
+material = "com.google.android.material:material:1.3.0"
+
+mixpanel-android = "com.mixpanel.android:mixpanel-android:5.6.4"
+
+mockito-kotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+
+mobius-android = { module = "com.spotify.mobius:mobius-android", version.ref = "mobius" }
+mobius-core = { module = "com.spotify.mobius:mobius-core", version.ref = "mobius" }
+mobius-extras = { module = "com.spotify.mobius:mobius-extras", version.ref = "mobius" }
+mobius-rx2 = { module = "com.spotify.mobius:mobius-rx2", version.ref = "mobius" }
+mobius-test = { module = "com.spotify.mobius:mobius-test", version.ref = "mobius" }
+
+moshi-adapters = { module = "com.squareup.moshi:moshi-adapters", version.ref = "moshi" }
+moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
+moshi-moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
+
+okhttp-okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+okhttp-interceptor-logging = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
+
+play-core = "com.google.android.play:core:1.10.0"
+play-services-auth = "com.google.android.gms:play-services-auth:19.0.0"
+play-services-location = "com.google.android.gms:play-services-location:16.0.0"
+play-services-mlkit-barcode = "com.google.android.gms:play-services-mlkit-barcode-scanning:16.1.4"
+
+quarantine = "com.vinaysshenoy:quarantine-junit4:0.3.0"
+
+rootbeer = "com.scottyab:rootbeer-lib:0.0.9"
+
+retrofit-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-rx = { module = "com.squareup.retrofit2:adapter-rxjava2", version.ref = "retrofit" }
+retrofit-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
+retrofit-scalars = { module = "com.squareup.retrofit2:converter-scalars", version.ref = "retrofit" }
+
+rx-android = "io.reactivex.rxjava2:rxandroid:2.1.1"
+rx-binding-appcompat = { module = "com.jakewharton.rxbinding3:rxbinding-appcompat", version.ref = "rx-binding" }
+rx-binding-binding = { module = "com.jakewharton.rxbinding3:rxbinding", version.ref = "rx-binding" }
+rx-binding-recyclerview = { module = "com.jakewharton.rxbinding3:rxbinding-recyclerview", version.ref = "rx-binding" }
+rx-java = "io.reactivex.rxjava2:rxjava:2.2.16"
+rx-kotlin = "io.reactivex.rxjava2:rxkotlin:2.4.0"
+rx-preferences = "com.f2prateek.rx.preferences2:rx-preferences:2.0.0"
+
+sentry-android = "io.sentry:sentry-android:4.3.0"
+sentry-gradle-plugin = "io.sentry:sentry-android-gradle-plugin:1.7.36"
+
+signaturepad = "com.github.gcacace:signature-pad:1.3.1"
+
+soloader = "com.facebook.soloader:soloader:0.5.1"
+
+sqlite-android = "com.github.requery:sqlite-android:3.35.5"
+
+threeten-extra = "org.threeten:threeten-extra:1.6.0"
+
+timber = "com.jakewharton.timber:timber:4.7.0"
+
+traceur = "com.github.qoqa:Traceur:2.2.12"
+
+truth = "com.google.truth:truth:1.1.2"
+
+uuid-generator = "com.fasterxml.uuid:java-uuid-generator:3.2.0"
+
+viewpump = "io.github.inflationx:viewpump:2.0.3"
+
+zxing = "com.google.zxing:core:3.3.3"
+
+[bundles]
+androidx-camera = ["androidx-camera-core", "androidx-camera-camera2", "androidx-camera-view", "androidx-camera-lifecycle"]
+androidx-paging = ["androidx-paging-common", "androidx-paging-runtime", "androidx-paging-rx2"]
+androidx-room = ["androidx-room-runtime", "androidx-room-rx2"]
+androidx-test = ["androidx-test-junit", "androidx-test-runner", "androidx-test-rules"]
+androidx-work = ["androidx-work-runtime", "androidx-work-gcm"]
+
+lint = ["lint-api", "lint-checks"]
+
+mobius = ["mobius-android", "mobius-core", "mobius-extras", "mobius-rx2"]
+
+moshi = ["moshi-moshi", "moshi-adapters"]
+
+okhttp = ["okhttp-okhttp", "okhttp-interceptor-logging"]
+
+retrofit = ["retrofit-retrofit", "retrofit-rx", "retrofit-moshi", "retrofit-scalars"]
+
+rx-binding = ["rx-binding-appcompat", "rx-binding-binding", "rx-binding-recyclerview"]

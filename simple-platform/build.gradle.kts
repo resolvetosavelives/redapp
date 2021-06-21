@@ -4,11 +4,15 @@ plugins {
 }
 
 android {
-  compileSdkVersion(versions.compileSdk)
+  val compileSdk: Int by rootProject.extra
+  val minSdk: Int by rootProject.extra
+  val targetSdk: Int by rootProject.extra
+
+  compileSdkVersion(compileSdk)
 
   defaultConfig {
-    minSdkVersion(versions.minSdk)
-    targetSdkVersion(versions.compileSdk)
+    minSdkVersion(minSdk)
+    targetSdkVersion(targetSdk)
     versionCode = 1
     versionName = "0.1"
 
@@ -27,6 +31,7 @@ android {
 }
 
 dependencies {
-  implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}")
-  api("com.jakewharton.timber:timber:${versions.timber}")
+  implementation(libs.kotlin.stdlib)
+
+  api(libs.timber)
 }
