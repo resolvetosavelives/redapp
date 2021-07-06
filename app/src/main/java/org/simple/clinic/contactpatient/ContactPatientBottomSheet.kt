@@ -131,15 +131,15 @@ class ContactPatientBottomSheet : BaseBottomSheet<
 
   override fun events() = Observable
       .mergeArray(
-          normalCallClicks(),
-          secureCallClicks(),
-          agreedToVisitClicks(),
-          remindToCallLaterClicks(),
+          normalCallClicks_Old(),
+          secureCallClicks_Old(),
+          agreedToVisitClicks_Old(),
+          remindToCallLaterClicks_Old(),
           nextReminderDateClicks(),
           previousReminderDateClicks(),
           appointmentDateClicks(),
           saveReminderDateClicks(),
-          removeFromOverdueListClicks(),
+          removeFromOverdueListClicks_Old(),
           hotEvents
       )
       .compose(RequestPermissions<ContactPatientEvent>(runtimePermissions, permissionResults))
@@ -345,7 +345,7 @@ class ContactPatientBottomSheet : BaseBottomSheet<
     hotEvents.onNext(BackClicked)
   }
 
-  private fun normalCallClicks(): Observable<ContactPatientEvent> {
+  private fun normalCallClicks_Old(): Observable<ContactPatientEvent> {
     return Observable.create { emitter ->
       emitter.setCancellable { callPatientView_Old.normalCallButtonClicked = null }
 
@@ -353,7 +353,7 @@ class ContactPatientBottomSheet : BaseBottomSheet<
     }
   }
 
-  private fun secureCallClicks(): Observable<ContactPatientEvent> {
+  private fun secureCallClicks_Old(): Observable<ContactPatientEvent> {
     return Observable.create { emitter ->
       emitter.setCancellable { callPatientView_Old.secureCallButtonClicked = null }
 
@@ -361,7 +361,7 @@ class ContactPatientBottomSheet : BaseBottomSheet<
     }
   }
 
-  private fun agreedToVisitClicks(): Observable<ContactPatientEvent> {
+  private fun agreedToVisitClicks_Old(): Observable<ContactPatientEvent> {
     return Observable.create { emitter ->
       emitter.setCancellable { callPatientView_Old.agreedToVisitClicked = null }
 
@@ -369,7 +369,7 @@ class ContactPatientBottomSheet : BaseBottomSheet<
     }
   }
 
-  private fun remindToCallLaterClicks(): Observable<ContactPatientEvent> {
+  private fun remindToCallLaterClicks_Old(): Observable<ContactPatientEvent> {
     return Observable.create { emitter ->
       emitter.setCancellable { callPatientView_Old.remindToCallLaterClicked = null }
 
@@ -409,7 +409,7 @@ class ContactPatientBottomSheet : BaseBottomSheet<
     }
   }
 
-  private fun removeFromOverdueListClicks(): Observable<ContactPatientEvent> {
+  private fun removeFromOverdueListClicks_Old(): Observable<ContactPatientEvent> {
     return Observable.create { emitter ->
       emitter.setCancellable { callPatientView_Old.removeFromOverdueListClicked = null }
 
