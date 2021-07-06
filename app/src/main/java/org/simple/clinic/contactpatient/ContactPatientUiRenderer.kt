@@ -35,7 +35,7 @@ class ContactPatientUiRenderer(
     renderSelectedAppointmentDate(model)
     toggleStateOfReminderDateSteppers(model)
 
-    ui.switchToSetAppointmentReminderView()
+    ui.switchToSetAppointmentReminderView_Old()
   }
 
   private fun renderCallPatientView(model: ContactPatientModel) {
@@ -48,12 +48,12 @@ class ContactPatientUiRenderer(
     }
 
     if (model.secureCallingFeatureEnabled) {
-      ui.showSecureCallUi()
+      ui.showSecureCallUi_Old()
     } else {
-      ui.hideSecureCallUi()
+      ui.hideSecureCallUi_Old()
     }
 
-    ui.switchToCallPatientView()
+    ui.switchToCallPatientView_Old()
   }
 
   private fun toggleStateOfReminderDateSteppers(model: ContactPatientModel) {
@@ -100,16 +100,16 @@ class ContactPatientUiRenderer(
 
   private fun toggleCallResultSection(appointment: ParcelableOptional<OverdueAppointment>) {
     if (appointment.isEmpty()) {
-      ui.hideCallResultSection()
+      ui.hideCallResultSection_Old()
     } else {
-      ui.showCallResultSection()
+      ui.showCallResultSection_Old()
     }
   }
 
   private fun renderPatientProfile(patientProfile: PatientProfile) {
     val patientAge = DateOfBirth.fromPatient(patientProfile.patient, clock).estimateAge(clock)
 
-    ui.renderPatientDetails(
+    ui.renderPatientDetails_Old(
         name = patientProfile.patient.fullName,
         gender = patientProfile.patient.gender,
         age = patientAge,

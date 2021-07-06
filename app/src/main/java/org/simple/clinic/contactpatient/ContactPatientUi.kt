@@ -5,14 +5,14 @@ import org.simple.clinic.patient.Gender
 import java.time.LocalDate
 
 interface ContactPatientUi {
-  fun switchToCallPatientView()
-  fun switchToSetAppointmentReminderView()
+  fun switchToCallPatientView_Old()
+  fun switchToSetAppointmentReminderView_Old()
 
-  fun renderPatientDetails(name: String, gender: Gender, age: Int, phoneNumber: String)
-  fun showCallResultSection()
-  fun hideCallResultSection()
-  fun showSecureCallUi()
-  fun hideSecureCallUi()
+  fun renderPatientDetails_Old(name: String, gender: Gender, age: Int, phoneNumber: String)
+  fun showCallResultSection_Old()
+  fun hideCallResultSection_Old()
+  fun showSecureCallUi_Old()
+  fun hideSecureCallUi_Old()
 
   fun renderSelectedAppointmentDate(
       selectedAppointmentReminderPeriod: TimeToAppointment,

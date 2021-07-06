@@ -181,27 +181,27 @@ class ContactPatientBottomSheet : BaseBottomSheet<
     }
   }
 
-  override fun renderPatientDetails(name: String, gender: Gender, age: Int, phoneNumber: String) {
+  override fun renderPatientDetails_Old(name: String, gender: Gender, age: Int, phoneNumber: String) {
     callPatientView_Old.renderPatientDetails(name, gender, age, phoneNumber)
   }
 
-  override fun showCallResultSection() {
+  override fun showCallResultSection_Old() {
     fadeIn(contentFlipper)
 
     callPatientView_Old.callResultSectionVisible = true
   }
 
-  override fun hideCallResultSection() {
+  override fun hideCallResultSection_Old() {
     fadeIn(contentFlipper)
 
     callPatientView_Old.callResultSectionVisible = false
   }
 
-  override fun showSecureCallUi() {
+  override fun showSecureCallUi_Old() {
     callPatientView_Old.secureCallingSectionVisible = true
   }
 
-  override fun hideSecureCallUi() {
+  override fun hideSecureCallUi_Old() {
     callPatientView_Old.secureCallingSectionVisible = false
   }
 
@@ -256,12 +256,12 @@ class ContactPatientBottomSheet : BaseBottomSheet<
     setAppointmentReminderView.enableNextReminderDateStepper()
   }
 
-  override fun switchToCallPatientView() {
+  override fun switchToCallPatientView_Old() {
     callPatientView_Old.visibility = VISIBLE
     setAppointmentReminderView.visibility = GONE
   }
 
-  override fun switchToSetAppointmentReminderView() {
+  override fun switchToSetAppointmentReminderView_Old() {
     sharedAxis(contentFlipper)
 
     callPatientView_Old.visibility = GONE

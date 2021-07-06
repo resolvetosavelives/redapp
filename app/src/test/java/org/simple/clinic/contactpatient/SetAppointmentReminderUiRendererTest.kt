@@ -43,7 +43,7 @@ class SetAppointmentReminderUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).switchToSetAppointmentReminderView()
+    verify(ui).switchToSetAppointmentReminderView_Old()
     verify(ui).enablePreviousReminderDateStepper()
     verify(ui).enableNextReminderDateStepper()
 
@@ -67,7 +67,7 @@ class SetAppointmentReminderUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).switchToSetAppointmentReminderView()
+    verify(ui).switchToSetAppointmentReminderView_Old()
     verify(ui).renderSelectedAppointmentDate(reminderPeriod, selectedReminderDate.scheduledFor)
     verify(ui).enableNextReminderDateStepper()
 
@@ -91,7 +91,7 @@ class SetAppointmentReminderUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).switchToSetAppointmentReminderView()
+    verify(ui).switchToSetAppointmentReminderView_Old()
     verify(ui).renderSelectedAppointmentDate(reminderPeriod, selectedReminderDate.scheduledFor)
     verify(ui).enableNextReminderDateStepper()
 
@@ -115,7 +115,7 @@ class SetAppointmentReminderUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).switchToSetAppointmentReminderView()
+    verify(ui).switchToSetAppointmentReminderView_Old()
     verify(ui).renderSelectedAppointmentDate(reminderPeriod, selectedReminderDate.scheduledFor)
     verify(ui).enablePreviousReminderDateStepper()
 
@@ -139,7 +139,7 @@ class SetAppointmentReminderUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).switchToSetAppointmentReminderView()
+    verify(ui).switchToSetAppointmentReminderView_Old()
     verify(ui).renderSelectedAppointmentDate(reminderPeriod, selectedReminderDate.scheduledFor)
     verify(ui).enablePreviousReminderDateStepper()
 
@@ -163,7 +163,7 @@ class SetAppointmentReminderUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).switchToSetAppointmentReminderView()
+    verify(ui).switchToSetAppointmentReminderView_Old()
     verify(ui).renderSelectedAppointmentDate(reminderPeriod, selectedReminderDate.scheduledFor)
     verify(ui).enablePreviousReminderDateStepper()
 

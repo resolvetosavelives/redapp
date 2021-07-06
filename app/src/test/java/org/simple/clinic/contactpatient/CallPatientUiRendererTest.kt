@@ -64,11 +64,11 @@ class CallPatientUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).hideSecureCallUi()
-    verify(ui).switchToCallPatientView()
+    verify(ui).hideSecureCallUi_Old()
+    verify(ui).switchToCallPatientView_Old()
 
     val expectedAge = 48 // difference between clock date and DOB
-    verify(ui).renderPatientDetails(name, gender, expectedAge, phoneNumber)
+    verify(ui).renderPatientDetails_Old(name, gender, expectedAge, phoneNumber)
     verifyNoMoreInteractions(ui)
   }
 
@@ -95,11 +95,11 @@ class CallPatientUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).hideSecureCallUi()
-    verify(ui).switchToCallPatientView()
+    verify(ui).hideSecureCallUi_Old()
+    verify(ui).switchToCallPatientView_Old()
 
     val expectedAge = 48 // difference between clock date and Age
-    verify(ui).renderPatientDetails(name, gender, expectedAge, phoneNumber)
+    verify(ui).renderPatientDetails_Old(name, gender, expectedAge, phoneNumber)
     verifyNoMoreInteractions(ui)
   }
 
@@ -117,10 +117,10 @@ class CallPatientUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).hideSecureCallUi()
-    verify(ui).switchToCallPatientView()
+    verify(ui).hideSecureCallUi_Old()
+    verify(ui).switchToCallPatientView_Old()
 
-    verify(ui).showCallResultSection()
+    verify(ui).showCallResultSection_Old()
     verifyNoMoreInteractions(ui)
   }
 
@@ -132,10 +132,10 @@ class CallPatientUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).hideSecureCallUi()
-    verify(ui).switchToCallPatientView()
+    verify(ui).hideSecureCallUi_Old()
+    verify(ui).switchToCallPatientView_Old()
 
-    verify(ui).hideCallResultSection()
+    verify(ui).hideCallResultSection_Old()
     verifyNoMoreInteractions(ui)
   }
 
@@ -148,9 +148,9 @@ class CallPatientUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).switchToCallPatientView()
+    verify(ui).switchToCallPatientView_Old()
 
-    verify(ui).showSecureCallUi()
+    verify(ui).showSecureCallUi_Old()
     verifyNoMoreInteractions(ui)
   }
 
@@ -163,9 +163,9 @@ class CallPatientUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).switchToCallPatientView()
+    verify(ui).switchToCallPatientView_Old()
 
-    verify(ui).hideSecureCallUi()
+    verify(ui).hideSecureCallUi_Old()
     verifyNoMoreInteractions(ui)
   }
 
