@@ -16,6 +16,9 @@ interface ContactPatientUi {
   fun showSecureCallUi_Old()
   fun hideSecureCallUi_Old()
 
+  fun showPatientWithNoPhoneNumberUi()
+  fun hidePatientWithPhoneNumberUi()
+
   fun renderSelectedAppointmentDate(
       selectedAppointmentReminderPeriod: TimeToAppointment,
       selectedDate: LocalDate

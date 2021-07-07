@@ -198,6 +198,29 @@ class CallPatientUiRendererTest {
     verifyNoMoreInteractions(ui)
   }
 
+  @Test
+  fun `display patient with no phone number layout for patient with no phone number`() {
+    // given
+    val patientProfile = TestData.patientProfile(patientUuid = patientUuid, generatePhoneNumber = false)
+    val overdueAppointment = TestData.overdueAppointment(
+        facilityUuid = UUID.fromString("a607a97f-4bf6-4ce6-86a3-b266059c7734"),
+        patientUuid = patientUuid
+    )
+
+    // when
+    uiRenderer.render(defaultModel(overdueListChangesFeatureEnabled = true)
+        .overdueAppointmentLoaded(Optional.of(overdueAppointment))
+        .contactPatientInfoLoaded()
+        .patientProfileLoaded(patientProfile))
+
+    // then
+    verify(ui).hideProgress()
+    verify(ui).showPatientWithNoPhoneNumberUi()
+    verify(ui).hidePatientWithPhoneNumberUi()
+    verify(ui).switchToCallPatientView()
+    verifyNoMoreInteractions(ui)
+  }
+
   private fun defaultModel(
       phoneMaskFeatureEnabled: Boolean = false,
       timeToAppointments: List<TimeToAppointment> = this.timeToAppointments,
