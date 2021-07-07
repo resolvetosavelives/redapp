@@ -209,6 +209,14 @@ class ContactPatientBottomSheet : BaseBottomSheet<
     callPatientView.showPatientWithNoPhoneNumberLayout = true
   }
 
+  override fun hidePatientWithNoPhoneNumberUi() {
+    callPatientView.showPatientWithNoPhoneNumberLayout = false
+  }
+
+  override fun showPatientWithPhoneNumberUi() {
+    callPatientView.showPatientWithPhoneNumberLayout = true
+  }
+
   override fun hidePatientWithPhoneNumberUi() {
     callPatientView.showPatientWithPhoneNumberLayout = false
   }

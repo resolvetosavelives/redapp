@@ -65,7 +65,10 @@ class ContactPatientUiRenderer(
   }
 
   private fun renderCallPatientView(model: ContactPatientModel) {
-    if (!model.patientProfileHasPhoneNumber && model.hasLoadedAppointment) {
+    if (model.patientProfileHasPhoneNumber && model.hasLoadedAppointment) {
+      ui.showPatientWithPhoneNumberUi()
+      ui.hidePatientWithNoPhoneNumberUi()
+    } else {
       ui.showPatientWithNoPhoneNumberUi()
       ui.hidePatientWithPhoneNumberUi()
     }
