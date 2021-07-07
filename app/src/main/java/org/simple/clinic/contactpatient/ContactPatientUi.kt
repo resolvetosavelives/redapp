@@ -21,7 +21,8 @@ interface ContactPatientUi {
   fun showSecureCallUi()
 
   fun hideSecureCallUi_Old()
-  
+  fun hideSecureCallUi()
+
   fun showPatientWithNoPhoneNumberUi()
   fun hidePatientWithNoPhoneNumberUi()
 
