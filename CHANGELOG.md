@@ -23,6 +23,7 @@
   - Load overdue patients without phone number
   - Add option to download & share overdue list
   - Updated contact patient bottom sheet UI
+  - Updated contact patient bottom sheet behaviour for supporting patients with and without phone number
   
 ### Fixes
 - Fix invalid qr code error when scanning a valid Indian NHID
