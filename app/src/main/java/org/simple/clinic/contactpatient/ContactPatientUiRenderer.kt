@@ -88,12 +88,19 @@ class ContactPatientUiRenderer(
     if (model.patientProfileHasPhoneNumber && model.hasLoadedAppointment) {
       ui.showPatientWithPhoneNumberUi()
       ui.hidePatientWithNoPhoneNumberUi()
+
+      loadSecureCallingUi(model)
     } else {
       ui.showPatientWithNoPhoneNumberUi()
       ui.hidePatientWithPhoneNumberUi()
     }
 
     ui.switchToCallPatientView()
+  }
+
+  private fun loadSecureCallingUi(model: ContactPatientModel) {
+    if (model.secureCallingFeatureEnabled)
+      ui.showSecureCallUi()
   }
 
   private fun toggleStateOfReminderDateSteppers(model: ContactPatientModel) {

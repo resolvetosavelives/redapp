@@ -142,7 +142,7 @@ class CallPatientUiRendererTest {
   }
 
   @Test
-  fun `if the secure call feature is enabled, show the secure call ui`() {
+  fun `if the secure call feature is enabled, show the old secure call ui`() {
     // when
     val model = defaultModel(phoneMaskFeatureEnabled = true)
         .contactPatientInfoLoaded()
@@ -153,6 +153,47 @@ class CallPatientUiRendererTest {
     verify(ui).switchToCallPatientView_Old()
 
     verify(ui).showSecureCallUi_Old()
+    verifyNoMoreInteractions(ui)
+  }
+
+  @Test
+  fun `if the secure call feature is enabled and overdue list changes is enabled, show the secure call ui`() {
+    // given
+    val patientAddress = "Bhatinda, Punjab"
+    val patientProfile = TestData.patientProfile(patientUuid = patientUuid, generatePhoneNumber = true)
+    val overdueAppointment = TestData.overdueAppointment(
+        facilityUuid = UUID.fromString("a607a97f-4bf6-4ce6-86a3-b266059c7734"),
+        patientUuid = patientUuid,
+        patientAddress = TestData.overduePatientAddress(
+            streetAddress = null,
+            colonyOrVillage = null,
+            district = "Bhatinda",
+            state = "Punjab"),
+        appointmentFacilityName = "Bhatinda",
+        diagnosedWithDiabetes = Answer.Yes,
+        diagnosedWithHypertension = Answer.No
+    )
+
+    // when
+    val model = defaultModel(phoneMaskFeatureEnabled = true, overdueListChangesFeatureEnabled = true)
+        .contactPatientInfoLoaded().patientProfileLoaded(patientProfile).overdueAppointmentLoaded(Optional.of(overdueAppointment))
+    uiRenderer.render(model)
+
+    // then
+    verify(ui).hideProgress()
+    verify(ui).switchToCallPatientView()
+    verify(ui).renderPatientDetails(PatientDetails(name = patientProfile.patient.fullName,
+        gender = patientProfile.patient.gender,
+        age = DateOfBirth.fromPatient(patientProfile.patient, clock).estimateAge(clock),
+        phoneNumber = patientProfile.phoneNumbers.first().number,
+        patientAddress = patientAddress,
+        registeredFacility = overdueAppointment.appointmentFacilityName!!,
+        diagnosedWithDiabetes = overdueAppointment.diagnosedWithDiabetes,
+        diagnosedWithHypertension = overdueAppointment.diagnosedWithHypertension,
+        lastVisited = overdueAppointment.patientLastSeen))
+    verify(ui).showPatientWithPhoneNumberUi()
+    verify(ui).hidePatientWithNoPhoneNumberUi()
+    verify(ui).showSecureCallUi()
     verifyNoMoreInteractions(ui)
   }
 
