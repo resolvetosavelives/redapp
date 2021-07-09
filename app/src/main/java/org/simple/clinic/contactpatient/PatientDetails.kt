@@ -15,3 +15,7 @@ data class PatientDetails(
     val diagnosedWithHypertension: Answer?,
     val lastVisited: Instant
 )
+
+enum class ResultLabel {
+  RESULT_OF_CALL, RESULT
+}

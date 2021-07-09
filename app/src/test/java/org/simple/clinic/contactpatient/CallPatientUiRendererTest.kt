@@ -5,6 +5,8 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import org.junit.Test
 import org.simple.clinic.TestData
+import org.simple.clinic.contactpatient.ResultLabel.RESULT
+import org.simple.clinic.contactpatient.ResultLabel.RESULT_OF_CALL
 import org.simple.clinic.medicalhistory.Answer
 import org.simple.clinic.overdue.AppointmentConfig
 import org.simple.clinic.overdue.TimeToAppointment
@@ -194,6 +196,7 @@ class CallPatientUiRendererTest {
     verify(ui).showPatientWithPhoneNumberUi()
     verify(ui).hidePatientWithNoPhoneNumberUi()
     verify(ui).showSecureCallUi()
+    verify(ui).setResultOfCallLabelText(RESULT_OF_CALL)
     verifyNoMoreInteractions(ui)
   }
 
@@ -249,6 +252,7 @@ class CallPatientUiRendererTest {
         lastVisited = overdueAppointment.patientLastSeen))
     verify(ui).showPatientWithPhoneNumberUi()
     verify(ui).hidePatientWithNoPhoneNumberUi()
+    verify(ui).setResultOfCallLabelText(RESULT_OF_CALL)
     verify(ui).hideSecureCallUi()
     verifyNoMoreInteractions(ui)
   }
@@ -265,6 +269,7 @@ class CallPatientUiRendererTest {
     verify(ui).switchToCallPatientView()
     verify(ui).showPatientWithNoPhoneNumberUi()
     verify(ui).hidePatientWithPhoneNumberUi()
+    verify(ui).setResultOfCallLabelText(RESULT)
     verifyNoMoreInteractions(ui)
   }
 
@@ -321,6 +326,7 @@ class CallPatientUiRendererTest {
         diagnosedWithHypertension = overdueAppointment.diagnosedWithHypertension,
         lastVisited = overdueAppointment.patientLastSeen))
     verify(ui).switchToCallPatientView()
+    verify(ui).setResultOfCallLabelText(RESULT)
     verifyNoMoreInteractions(ui)
   }
 
@@ -363,6 +369,7 @@ class CallPatientUiRendererTest {
         lastVisited = overdueAppointment.patientLastSeen))
     verify(ui).showSecureCallUi()
     verify(ui).switchToCallPatientView()
+    verify(ui).setResultOfCallLabelText(RESULT_OF_CALL)
     verifyNoMoreInteractions(ui)
   }
 

@@ -1,5 +1,7 @@
 package org.simple.clinic.contactpatient
 
+import org.simple.clinic.contactpatient.ResultLabel.RESULT
+import org.simple.clinic.contactpatient.ResultLabel.RESULT_OF_CALL
 import org.simple.clinic.contactpatient.UiMode.CallPatient
 import org.simple.clinic.contactpatient.UiMode.SetAppointmentReminder
 import org.simple.clinic.home.overdue.OverdueAppointment
@@ -88,11 +90,13 @@ class ContactPatientUiRenderer(
     if (model.patientProfileHasPhoneNumber && model.hasLoadedAppointment) {
       ui.showPatientWithPhoneNumberUi()
       ui.hidePatientWithNoPhoneNumberUi()
+      ui.setResultOfCallLabelText(RESULT_OF_CALL)
 
       loadSecureCallingUi(model)
     } else {
       ui.showPatientWithNoPhoneNumberUi()
       ui.hidePatientWithPhoneNumberUi()
+      ui.setResultOfCallLabelText(RESULT)
     }
 
     ui.switchToCallPatientView()
