@@ -312,6 +312,12 @@ class ContactPatientBottomSheet : BaseBottomSheet<
     setAppointmentReminderView.visibility = VISIBLE
   }
 
+  override fun switchToSetAppointmentReminderView() {
+    sharedAxis(contentFlipper)
+
+    callPatientView.visibility = GONE
+    setAppointmentReminderView.visibility = VISIBLE  }
+
   override fun openRemoveOverdueAppointmentScreen(appointmentId: UUID, patientId: UUID) {
     router.pushExpectingResult(
         RemoveOverdueAppointmentResult,

@@ -28,7 +28,7 @@ class ContactPatientUiRenderer(
     ui.hideProgress()
     when (model.uiMode) {
       CallPatient -> renderCallPatientViewBasedOnFeatureFlag(model)
-      SetAppointmentReminder -> renderSetAppointmentReminderView(model)
+      SetAppointmentReminder -> renderSetAppointmentReminderViewBasedOnFeatureFlag(model)
     }
   }
 
@@ -40,11 +40,26 @@ class ContactPatientUiRenderer(
     }
   }
 
-  private fun renderSetAppointmentReminderView(model: ContactPatientModel) {
+  private fun renderSetAppointmentReminderViewBasedOnFeatureFlag(model: ContactPatientModel) {
+    if (model.overdueListChangesFeatureEnabled) {
+      renderSetAppointmentReminderView(model)
+    } else {
+      renderSetAppointmentReminderView_Old(model)
+    }
+  }
+
+  private fun renderSetAppointmentReminderView_Old(model: ContactPatientModel) {
     renderSelectedAppointmentDate(model)
     toggleStateOfReminderDateSteppers(model)
 
     ui.switchToSetAppointmentReminderView_Old()
+  }
+
+  private fun renderSetAppointmentReminderView(model: ContactPatientModel) {
+    renderSelectedAppointmentDate(model)
+    toggleStateOfReminderDateSteppers(model)
+
+    ui.switchToSetAppointmentReminderView()
   }
 
   private fun renderCallPatientView_Old(model: ContactPatientModel) {
