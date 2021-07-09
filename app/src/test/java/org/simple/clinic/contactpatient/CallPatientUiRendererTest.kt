@@ -169,6 +169,35 @@ class CallPatientUiRendererTest {
     verifyNoMoreInteractions(ui)
   }
 
+  @Test
+  fun `if the overdue list changes feature is enabled, then switch to call patient view`() {
+    // when
+    val model = defaultModel(phoneMaskFeatureEnabled = false, overdueListChangesFeatureEnabled = true)
+        .contactPatientInfoLoaded()
+    uiRenderer.render(model)
+
+    // then
+    verify(ui).hideProgress()
+    verify(ui).switchToCallPatientView()
+
+    verifyNoMoreInteractions(ui)
+  }
+
+
+  @Test
+  fun `if the overdue list changes feature is disabled, then switch to old call patient view`() {
+    // when
+    val model = defaultModel(phoneMaskFeatureEnabled = false, overdueListChangesFeatureEnabled = false)
+        .contactPatientInfoLoaded()
+    uiRenderer.render(model)
+
+    // then
+    verify(ui).hideProgress()
+    verify(ui).switchToCallPatientView_Old()
+    verify(ui).hideSecureCallUi_Old()
+    verifyNoMoreInteractions(ui)
+  }
+
   private fun defaultModel(
       phoneMaskFeatureEnabled: Boolean = false,
       timeToAppointments: List<TimeToAppointment> = this.timeToAppointments,

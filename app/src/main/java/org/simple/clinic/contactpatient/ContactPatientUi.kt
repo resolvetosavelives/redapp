@@ -6,6 +6,8 @@ import java.time.LocalDate
 
 interface ContactPatientUi {
   fun switchToCallPatientView_Old()
+  fun switchToCallPatientView()
+
   fun switchToSetAppointmentReminderView_Old()
 
   fun renderPatientDetails_Old(name: String, gender: Gender, age: Int, phoneNumber: String)
