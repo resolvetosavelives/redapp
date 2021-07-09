@@ -606,6 +606,7 @@
   <string name="contactpatient_call_later_in">Call later in</string>
   <string name="contactpatient_change">Change</string>
   <string name="contactpatient_done">Done</string>
+  <string name="contactpatient_result">Result</string>
   <plurals name="contactpatient_days">
     <item quantity="one">%s day</item>
     <item quantity="other">%s days</item>

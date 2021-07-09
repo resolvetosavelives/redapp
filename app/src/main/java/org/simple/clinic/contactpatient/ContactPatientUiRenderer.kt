@@ -3,6 +3,7 @@ package org.simple.clinic.contactpatient
 import org.simple.clinic.contactpatient.UiMode.CallPatient
 import org.simple.clinic.contactpatient.UiMode.SetAppointmentReminder
 import org.simple.clinic.home.overdue.OverdueAppointment
+import org.simple.clinic.home.overdue.OverduePatientAddress
 import org.simple.clinic.mobius.ViewRenderer
 import org.simple.clinic.overdue.PotentialAppointmentDate
 import org.simple.clinic.overdue.TimeToAppointment
@@ -48,7 +49,7 @@ class ContactPatientUiRenderer(
 
   private fun renderCallPatientView_Old(model: ContactPatientModel) {
     if (model.hasLoadedPatientProfile) {
-      renderPatientProfile(model.patientProfile!!)
+      renderPatientProfile_Old(model.patientProfile!!)
     }
 
     if (model.hasLoadedAppointment) {
@@ -65,6 +66,10 @@ class ContactPatientUiRenderer(
   }
 
   private fun renderCallPatientView(model: ContactPatientModel) {
+    if (model.hasLoadedPatientProfile && model.hasLoadedAppointment) {
+      renderPatientProfile(model.patientProfile!!, model.appointment!!)
+    }
+
     if (model.patientProfileHasPhoneNumber && model.hasLoadedAppointment) {
       ui.showPatientWithPhoneNumberUi()
       ui.hidePatientWithNoPhoneNumberUi()
@@ -126,7 +131,9 @@ class ContactPatientUiRenderer(
     }
   }
 
-  private fun renderPatientProfile(patientProfile: PatientProfile) {
+  private fun renderPatientProfile_Old(
+      patientProfile: PatientProfile
+  ) {
     val patientAge = DateOfBirth.fromPatient(patientProfile.patient, clock).estimateAge(clock)
 
     ui.renderPatientDetails_Old(
@@ -135,5 +142,33 @@ class ContactPatientUiRenderer(
         age = patientAge,
         phoneNumber = patientProfile.phoneNumbers.first().number
     )
+  }
+
+  private fun renderPatientProfile(
+      patientProfile: PatientProfile,
+      appointment: ParcelableOptional<OverdueAppointment>
+  ) {
+    val patientAge = DateOfBirth.fromPatient(patientProfile.patient, clock).estimateAge(clock)
+
+    ui.renderPatientDetails(PatientDetails(
+        name = patientProfile.patient.fullName,
+        gender = patientProfile.patient.gender,
+        age = patientAge,
+        phoneNumber = patientProfile.phoneNumbers.firstOrNull()?.number,
+        patientAddress = patientAddressText(appointment.get().patientAddress),
+        registeredFacility = appointment.get().appointmentFacilityName.orEmpty(),
+        diagnosedWithDiabetes = appointment.get().diagnosedWithDiabetes,
+        diagnosedWithHypertension = appointment.get().diagnosedWithHypertension,
+        lastVisited = appointment.get().patientLastSeen
+    ))
+  }
+
+  private fun patientAddressText(patientAddress: OverduePatientAddress) = when {
+    !patientAddress.streetAddress.isNullOrBlank() && !patientAddress.colonyOrVillage.isNullOrBlank() -> {
+      "${patientAddress.streetAddress}, ${patientAddress.colonyOrVillage}"
+    }
+    !patientAddress.streetAddress.isNullOrBlank() -> patientAddress.streetAddress
+    !patientAddress.colonyOrVillage.isNullOrBlank() -> patientAddress.colonyOrVillage
+    else -> "${patientAddress.district}, ${patientAddress.state}"
   }
 }
