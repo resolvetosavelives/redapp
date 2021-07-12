@@ -43,7 +43,7 @@ class SetAppointmentReminderUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).switchToSetAppointmentReminderView()
+    verify(ui).switchToSetAppointmentReminderView_Old()
     verify(ui).enablePreviousReminderDateStepper()
     verify(ui).enableNextReminderDateStepper()
 
@@ -67,7 +67,7 @@ class SetAppointmentReminderUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).switchToSetAppointmentReminderView()
+    verify(ui).switchToSetAppointmentReminderView_Old()
     verify(ui).renderSelectedAppointmentDate(reminderPeriod, selectedReminderDate.scheduledFor)
     verify(ui).enableNextReminderDateStepper()
 
@@ -91,7 +91,7 @@ class SetAppointmentReminderUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).switchToSetAppointmentReminderView()
+    verify(ui).switchToSetAppointmentReminderView_Old()
     verify(ui).renderSelectedAppointmentDate(reminderPeriod, selectedReminderDate.scheduledFor)
     verify(ui).enableNextReminderDateStepper()
 
@@ -115,7 +115,7 @@ class SetAppointmentReminderUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).switchToSetAppointmentReminderView()
+    verify(ui).switchToSetAppointmentReminderView_Old()
     verify(ui).renderSelectedAppointmentDate(reminderPeriod, selectedReminderDate.scheduledFor)
     verify(ui).enablePreviousReminderDateStepper()
 
@@ -139,7 +139,7 @@ class SetAppointmentReminderUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).switchToSetAppointmentReminderView()
+    verify(ui).switchToSetAppointmentReminderView_Old()
     verify(ui).renderSelectedAppointmentDate(reminderPeriod, selectedReminderDate.scheduledFor)
     verify(ui).enablePreviousReminderDateStepper()
 
@@ -163,12 +163,36 @@ class SetAppointmentReminderUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).switchToSetAppointmentReminderView()
+    verify(ui).switchToSetAppointmentReminderView_Old()
     verify(ui).renderSelectedAppointmentDate(reminderPeriod, selectedReminderDate.scheduledFor)
     verify(ui).enablePreviousReminderDateStepper()
 
     verify(ui).enableNextReminderDateStepper()
     verifyNoMoreInteractions(ui)
+  }
+
+  @Test
+  fun `when overdue list changes feature flag is true, then the current selected appointment date must be shown long with the reminder periods with the new view`() {
+    // given
+    val reminderPeriod = Weeks(1)
+    val selectedReminderDate = PotentialAppointmentDate(
+        timeToAppointment = reminderPeriod,
+        scheduledFor = LocalDate.parse("2018-01-08")
+    )
+
+    // when
+    val model = defaultModel(overdueListChangesFeatureEnabled = true).reminderDateSelected(selectedReminderDate)
+        .contactPatientInfoLoaded()
+    uiRenderer.render(model)
+
+    // then
+    verify(ui).hideProgress()
+    verify(ui).switchToSetAppointmentReminderView()
+    verify(ui).enablePreviousReminderDateStepper()
+    verify(ui).enableNextReminderDateStepper()
+    verify(ui).renderSelectedAppointmentDate(reminderPeriod, selectedReminderDate.scheduledFor)
+    verifyNoMoreInteractions(ui)
+
   }
 
   private fun defaultModel(

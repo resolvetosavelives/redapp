@@ -16,6 +16,7 @@ import io.reactivex.rxkotlin.cast
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.parcelize.Parcelize
+import org.simple.clinic.R
 import org.simple.clinic.ReportAnalyticsEvents
 import org.simple.clinic.databinding.SheetContactPatientBinding
 import org.simple.clinic.datepicker.DatePickerKeyFactory
@@ -43,11 +44,15 @@ import org.simple.clinic.util.RequestPermissions
 import org.simple.clinic.util.RuntimePermissions
 import org.simple.clinic.util.UserClock
 import org.simple.clinic.util.onBackPressed
+import org.simple.clinic.util.toLocalDateAtZone
 import org.simple.clinic.util.unsafeLazy
+import org.simple.clinic.util.valueOrEmpty
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
+import javax.inject.Named
 
 class ContactPatientBottomSheet : BaseBottomSheet<
     ContactPatientBottomSheet.Key,
@@ -76,6 +81,10 @@ class ContactPatientBottomSheet : BaseBottomSheet<
 
   @Inject
   lateinit var appointmentConfig: AppointmentConfig
+
+  @Inject
+  @Named("date_for_user_input")
+  lateinit var dateTimeFormatter: DateTimeFormatter
 
   @Inject
   lateinit var features: Features
@@ -123,14 +132,19 @@ class ContactPatientBottomSheet : BaseBottomSheet<
 
   override fun events() = Observable
       .mergeArray(
+          normalCallClicks_Old(),
           normalCallClicks(),
+          secureCallClicks_Old(),
           secureCallClicks(),
+          agreedToVisitClicks_Old(),
           agreedToVisitClicks(),
+          remindToCallLaterClicks_Old(),
           remindToCallLaterClicks(),
           nextReminderDateClicks(),
           previousReminderDateClicks(),
           appointmentDateClicks(),
           saveReminderDateClicks(),
+          removeFromOverdueListClicks_Old(),
           removeFromOverdueListClicks(),
           hotEvents
       )
@@ -181,28 +195,74 @@ class ContactPatientBottomSheet : BaseBottomSheet<
     }
   }
 
-  override fun renderPatientDetails(name: String, gender: Gender, age: Int, phoneNumber: String) {
+  override fun renderPatientDetails_Old(name: String, gender: Gender, age: Int, phoneNumber: String) {
     callPatientView_Old.renderPatientDetails(name, gender, age, phoneNumber)
   }
 
-  override fun showCallResultSection() {
+  override fun renderPatientDetails(patientDetails: PatientDetails) {
+    callPatientView.renderPatientDetails(PatientDetails(
+        patientDetails.name,
+        patientDetails.gender,
+        patientDetails.age,
+        patientDetails.phoneNumber.valueOrEmpty(),
+        patientDetails.patientAddress,
+        patientDetails.registeredFacility,
+        patientDetails.diagnosedWithDiabetes,
+        patientDetails.diagnosedWithHypertension,
+        patientDetails.lastVisited
+    ),
+        dateTimeFormatter.format(patientDetails.lastVisited.toLocalDateAtZone(userClock.zone)))
+  }
+
+  override fun showCallResultSection_Old() {
     fadeIn(contentFlipper)
 
     callPatientView_Old.callResultSectionVisible = true
   }
 
-  override fun hideCallResultSection() {
+  override fun hideCallResultSection_Old() {
     fadeIn(contentFlipper)
 
     callPatientView_Old.callResultSectionVisible = false
   }
 
-  override fun showSecureCallUi() {
+  override fun showSecureCallUi_Old() {
     callPatientView_Old.secureCallingSectionVisible = true
   }
 
-  override fun hideSecureCallUi() {
+  override fun showSecureCallUi() {
+    callPatientView.secureCallingSectionVisible = true
+  }
+
+  override fun hideSecureCallUi_Old() {
     callPatientView_Old.secureCallingSectionVisible = false
+  }
+
+  override fun hideSecureCallUi() {
+    callPatientView.secureCallingSectionVisible = false
+  }
+
+  override fun showPatientWithNoPhoneNumberUi() {
+    callPatientView.showPatientWithNoPhoneNumberLayout = true
+  }
+
+  override fun hidePatientWithNoPhoneNumberUi() {
+    callPatientView.showPatientWithNoPhoneNumberLayout = false
+  }
+
+  override fun showPatientWithPhoneNumberUi() {
+    callPatientView.showPatientWithPhoneNumberLayout = true
+  }
+
+  override fun hidePatientWithPhoneNumberUi() {
+    callPatientView.showPatientWithPhoneNumberLayout = false
+  }
+
+  override fun setResultOfCallLabelText(resultLabel: ResultLabel) {
+    callPatientView.setResultOfCallLabelText = when (resultLabel) {
+      ResultLabel.RESULT -> getString(R.string.contactpatient_result)
+      ResultLabel.RESULT_OF_CALL -> getString(R.string.contactpatient_result_of_call)
+    }
   }
 
   override fun directlyCallPatient(patientPhoneNumber: String, dialer: Dialer) {
@@ -256,17 +316,28 @@ class ContactPatientBottomSheet : BaseBottomSheet<
     setAppointmentReminderView.enableNextReminderDateStepper()
   }
 
-  override fun switchToCallPatientView() {
+  override fun switchToCallPatientView_Old() {
     callPatientView_Old.visibility = VISIBLE
     setAppointmentReminderView.visibility = GONE
   }
 
-  override fun switchToSetAppointmentReminderView() {
+  override fun switchToCallPatientView() {
+    callPatientView.visibility = VISIBLE
+    setAppointmentReminderView.visibility = GONE
+  }
+
+  override fun switchToSetAppointmentReminderView_Old() {
     sharedAxis(contentFlipper)
 
     callPatientView_Old.visibility = GONE
     setAppointmentReminderView.visibility = VISIBLE
   }
+
+  override fun switchToSetAppointmentReminderView() {
+    sharedAxis(contentFlipper)
+
+    callPatientView.visibility = GONE
+    setAppointmentReminderView.visibility = VISIBLE  }
 
   override fun openRemoveOverdueAppointmentScreen(appointmentId: UUID, patientId: UUID) {
     router.pushExpectingResult(
@@ -287,7 +358,7 @@ class ContactPatientBottomSheet : BaseBottomSheet<
     hotEvents.onNext(BackClicked)
   }
 
-  private fun normalCallClicks(): Observable<ContactPatientEvent> {
+  private fun normalCallClicks_Old(): Observable<ContactPatientEvent> {
     return Observable.create { emitter ->
       emitter.setCancellable { callPatientView_Old.normalCallButtonClicked = null }
 
@@ -295,7 +366,15 @@ class ContactPatientBottomSheet : BaseBottomSheet<
     }
   }
 
-  private fun secureCallClicks(): Observable<ContactPatientEvent> {
+  private fun normalCallClicks(): Observable<ContactPatientEvent> {
+    return Observable.create { emitter ->
+      emitter.setCancellable { callPatientView.normalCallButtonClicked = null }
+
+      callPatientView.normalCallButtonClicked = { emitter.onNext(NormalCallClicked()) }
+    }
+  }
+
+  private fun secureCallClicks_Old(): Observable<ContactPatientEvent> {
     return Observable.create { emitter ->
       emitter.setCancellable { callPatientView_Old.secureCallButtonClicked = null }
 
@@ -303,7 +382,15 @@ class ContactPatientBottomSheet : BaseBottomSheet<
     }
   }
 
-  private fun agreedToVisitClicks(): Observable<ContactPatientEvent> {
+  private fun secureCallClicks(): Observable<ContactPatientEvent> {
+    return Observable.create { emitter ->
+      emitter.setCancellable { callPatientView.secureCallButtonClicked = null }
+
+      callPatientView.secureCallButtonClicked = { emitter.onNext(SecureCallClicked()) }
+    }
+  }
+
+  private fun agreedToVisitClicks_Old(): Observable<ContactPatientEvent> {
     return Observable.create { emitter ->
       emitter.setCancellable { callPatientView_Old.agreedToVisitClicked = null }
 
@@ -311,11 +398,27 @@ class ContactPatientBottomSheet : BaseBottomSheet<
     }
   }
 
-  private fun remindToCallLaterClicks(): Observable<ContactPatientEvent> {
+  private fun agreedToVisitClicks(): Observable<ContactPatientEvent> {
+    return Observable.create { emitter ->
+      emitter.setCancellable { callPatientView.agreedToVisitClicked = null }
+
+      callPatientView.agreedToVisitClicked = { emitter.onNext(PatientAgreedToVisitClicked) }
+    }
+  }
+
+  private fun remindToCallLaterClicks_Old(): Observable<ContactPatientEvent> {
     return Observable.create { emitter ->
       emitter.setCancellable { callPatientView_Old.remindToCallLaterClicked = null }
 
       callPatientView_Old.remindToCallLaterClicked = { emitter.onNext(RemindToCallLaterClicked) }
+    }
+  }
+
+  private fun remindToCallLaterClicks(): Observable<ContactPatientEvent> {
+    return Observable.create { emitter ->
+      emitter.setCancellable { callPatientView.remindToCallLaterClicked = null }
+
+      callPatientView.remindToCallLaterClicked = { emitter.onNext(RemindToCallLaterClicked) }
     }
   }
 
@@ -351,11 +454,19 @@ class ContactPatientBottomSheet : BaseBottomSheet<
     }
   }
 
-  private fun removeFromOverdueListClicks(): Observable<ContactPatientEvent> {
+  private fun removeFromOverdueListClicks_Old(): Observable<ContactPatientEvent> {
     return Observable.create { emitter ->
       emitter.setCancellable { callPatientView_Old.removeFromOverdueListClicked = null }
 
       callPatientView_Old.removeFromOverdueListClicked = { emitter.onNext(RemoveFromOverdueListClicked) }
+    }
+  }
+
+  private fun removeFromOverdueListClicks(): Observable<ContactPatientEvent> {
+    return Observable.create { emitter ->
+      emitter.setCancellable { callPatientView.removeFromOverdueListClicked = null }
+
+      callPatientView.removeFromOverdueListClicked = { emitter.onNext(RemoveFromOverdueListClicked) }
     }
   }
 

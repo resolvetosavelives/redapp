@@ -88,6 +88,12 @@ class CallPatientView(
       patientWithoutPhoneNumberGroup.visibility = if (field) View.VISIBLE else View.GONE
     }
 
+  var setResultOfCallLabelText: String = resources.getString(R.string.contactpatient_result_of_call)
+    set(value) {
+      field = value
+      resultOfCallLabelTextView.text = field
+    }
+
   var agreedToVisitClicked: AgreedToVisitClicked? = null
 
   var remindToCallLaterClicked: RemindToCallLaterClicked? = null

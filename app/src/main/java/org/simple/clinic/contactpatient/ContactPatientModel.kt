@@ -56,6 +56,9 @@ data class ContactPatientModel(
   val hasLoadedPatientProfile: Boolean
     get() = patientProfile != null
 
+  val patientProfileHasPhoneNumber: Boolean
+    get() = patientProfile != null && !patientProfile.phoneNumbers.isNullOrEmpty()
+
   val hasLoadedAppointment: Boolean
     get() = appointment != null
 

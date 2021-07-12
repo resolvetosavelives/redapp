@@ -5,11 +5,15 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import org.junit.Test
 import org.simple.clinic.TestData
+import org.simple.clinic.contactpatient.ResultLabel.RESULT
+import org.simple.clinic.contactpatient.ResultLabel.RESULT_OF_CALL
+import org.simple.clinic.medicalhistory.Answer
 import org.simple.clinic.overdue.AppointmentConfig
 import org.simple.clinic.overdue.TimeToAppointment
 import org.simple.clinic.overdue.TimeToAppointment.Days
 import org.simple.clinic.overdue.TimeToAppointment.Weeks
 import org.simple.clinic.patient.Age
+import org.simple.clinic.patient.DateOfBirth
 import org.simple.clinic.patient.Gender
 import org.simple.clinic.util.TestUserClock
 import java.time.Instant
@@ -64,11 +68,11 @@ class CallPatientUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).hideSecureCallUi()
-    verify(ui).switchToCallPatientView()
+    verify(ui).hideSecureCallUi_Old()
+    verify(ui).switchToCallPatientView_Old()
 
     val expectedAge = 48 // difference between clock date and DOB
-    verify(ui).renderPatientDetails(name, gender, expectedAge, phoneNumber)
+    verify(ui).renderPatientDetails_Old(name, gender, expectedAge, phoneNumber)
     verifyNoMoreInteractions(ui)
   }
 
@@ -95,11 +99,11 @@ class CallPatientUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).hideSecureCallUi()
-    verify(ui).switchToCallPatientView()
+    verify(ui).hideSecureCallUi_Old()
+    verify(ui).switchToCallPatientView_Old()
 
     val expectedAge = 48 // difference between clock date and Age
-    verify(ui).renderPatientDetails(name, gender, expectedAge, phoneNumber)
+    verify(ui).renderPatientDetails_Old(name, gender, expectedAge, phoneNumber)
     verifyNoMoreInteractions(ui)
   }
 
@@ -117,10 +121,10 @@ class CallPatientUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).hideSecureCallUi()
-    verify(ui).switchToCallPatientView()
+    verify(ui).hideSecureCallUi_Old()
+    verify(ui).switchToCallPatientView_Old()
 
-    verify(ui).showCallResultSection()
+    verify(ui).showCallResultSection_Old()
     verifyNoMoreInteractions(ui)
   }
 
@@ -132,15 +136,15 @@ class CallPatientUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).hideSecureCallUi()
-    verify(ui).switchToCallPatientView()
+    verify(ui).hideSecureCallUi_Old()
+    verify(ui).switchToCallPatientView_Old()
 
-    verify(ui).hideCallResultSection()
+    verify(ui).hideCallResultSection_Old()
     verifyNoMoreInteractions(ui)
   }
 
   @Test
-  fun `if the secure call feature is enabled, show the secure call ui`() {
+  fun `if the secure call feature is enabled, show the old secure call ui`() {
     // when
     val model = defaultModel(phoneMaskFeatureEnabled = true)
         .contactPatientInfoLoaded()
@@ -148,14 +152,56 @@ class CallPatientUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).switchToCallPatientView()
+    verify(ui).switchToCallPatientView_Old()
 
-    verify(ui).showSecureCallUi()
+    verify(ui).showSecureCallUi_Old()
     verifyNoMoreInteractions(ui)
   }
 
   @Test
-  fun `if the secure call feature is disabled, hide the secure call ui`() {
+  fun `if the secure call feature is enabled and overdue list changes is enabled, show the secure call ui`() {
+    // given
+    val patientAddress = "Bhatinda, Punjab"
+    val patientProfile = TestData.patientProfile(patientUuid = patientUuid, generatePhoneNumber = true)
+    val overdueAppointment = TestData.overdueAppointment(
+        facilityUuid = UUID.fromString("a607a97f-4bf6-4ce6-86a3-b266059c7734"),
+        patientUuid = patientUuid,
+        patientAddress = TestData.overduePatientAddress(
+            streetAddress = null,
+            colonyOrVillage = null,
+            district = "Bhatinda",
+            state = "Punjab"),
+        appointmentFacilityName = "Bhatinda",
+        diagnosedWithDiabetes = Answer.Yes,
+        diagnosedWithHypertension = Answer.No
+    )
+
+    // when
+    val model = defaultModel(phoneMaskFeatureEnabled = true, overdueListChangesFeatureEnabled = true)
+        .contactPatientInfoLoaded().patientProfileLoaded(patientProfile).overdueAppointmentLoaded(Optional.of(overdueAppointment))
+    uiRenderer.render(model)
+
+    // then
+    verify(ui).hideProgress()
+    verify(ui).switchToCallPatientView()
+    verify(ui).renderPatientDetails(PatientDetails(name = patientProfile.patient.fullName,
+        gender = patientProfile.patient.gender,
+        age = DateOfBirth.fromPatient(patientProfile.patient, clock).estimateAge(clock),
+        phoneNumber = patientProfile.phoneNumbers.first().number,
+        patientAddress = patientAddress,
+        registeredFacility = overdueAppointment.appointmentFacilityName!!,
+        diagnosedWithDiabetes = overdueAppointment.diagnosedWithDiabetes,
+        diagnosedWithHypertension = overdueAppointment.diagnosedWithHypertension,
+        lastVisited = overdueAppointment.patientLastSeen))
+    verify(ui).showPatientWithPhoneNumberUi()
+    verify(ui).hidePatientWithNoPhoneNumberUi()
+    verify(ui).showSecureCallUi()
+    verify(ui).setResultOfCallLabelText(RESULT_OF_CALL)
+    verifyNoMoreInteractions(ui)
+  }
+
+  @Test
+  fun `if the secure call feature is disabled and overdue list feature is disabled, hide the old secure call ui`() {
     // when
     val model = defaultModel(phoneMaskFeatureEnabled = false)
         .contactPatientInfoLoaded()
@@ -163,9 +209,167 @@ class CallPatientUiRendererTest {
 
     // then
     verify(ui).hideProgress()
-    verify(ui).switchToCallPatientView()
+    verify(ui).switchToCallPatientView_Old()
 
+    verify(ui).hideSecureCallUi_Old()
+    verifyNoMoreInteractions(ui)
+  }
+
+  @Test
+  fun `if the secure call feature is disabled and overdue list feature is enabled, hide the secure call ui`() {
+    val patientAddress = "Bhatinda, Punjab"
+    val patientProfile = TestData.patientProfile(patientUuid = patientUuid, generatePhoneNumber = true)
+    val overdueAppointment = TestData.overdueAppointment(
+        facilityUuid = UUID.fromString("a607a97f-4bf6-4ce6-86a3-b266059c7734"),
+        patientUuid = patientUuid,
+        patientAddress = TestData.overduePatientAddress(
+            streetAddress = null,
+            colonyOrVillage = null,
+            district = "Bhatinda",
+            state = "Punjab"),
+        appointmentFacilityName = "Bhatinda",
+        diagnosedWithDiabetes = Answer.Yes,
+        diagnosedWithHypertension = Answer.No
+    )
+
+    // when
+    val model = defaultModel(phoneMaskFeatureEnabled = false, overdueListChangesFeatureEnabled = true)
+        .contactPatientInfoLoaded().patientProfileLoaded(patientProfile).overdueAppointmentLoaded(Optional.of(overdueAppointment))
+
+    uiRenderer.render(model)
+
+    // then
+    verify(ui).hideProgress()
+    verify(ui).switchToCallPatientView()
+    verify(ui).renderPatientDetails(PatientDetails(name = patientProfile.patient.fullName,
+        gender = patientProfile.patient.gender,
+        age = DateOfBirth.fromPatient(patientProfile.patient, clock).estimateAge(clock),
+        phoneNumber = patientProfile.phoneNumbers.first().number,
+        patientAddress = patientAddress,
+        registeredFacility = overdueAppointment.appointmentFacilityName!!,
+        diagnosedWithDiabetes = overdueAppointment.diagnosedWithDiabetes,
+        diagnosedWithHypertension = overdueAppointment.diagnosedWithHypertension,
+        lastVisited = overdueAppointment.patientLastSeen))
+    verify(ui).showPatientWithPhoneNumberUi()
+    verify(ui).hidePatientWithNoPhoneNumberUi()
+    verify(ui).setResultOfCallLabelText(RESULT_OF_CALL)
     verify(ui).hideSecureCallUi()
+    verifyNoMoreInteractions(ui)
+  }
+
+  @Test
+  fun `if the overdue list changes feature is enabled, then switch to call patient view`() {
+    // when
+    val model = defaultModel(phoneMaskFeatureEnabled = false, overdueListChangesFeatureEnabled = true)
+        .contactPatientInfoLoaded()
+    uiRenderer.render(model)
+
+    // then
+    verify(ui).hideProgress()
+    verify(ui).switchToCallPatientView()
+    verify(ui).showPatientWithNoPhoneNumberUi()
+    verify(ui).hidePatientWithPhoneNumberUi()
+    verify(ui).setResultOfCallLabelText(RESULT)
+    verifyNoMoreInteractions(ui)
+  }
+
+
+  @Test
+  fun `if the overdue list changes feature is disabled, then switch to old call patient view`() {
+    // when
+    val model = defaultModel(phoneMaskFeatureEnabled = false, overdueListChangesFeatureEnabled = false)
+        .contactPatientInfoLoaded()
+    uiRenderer.render(model)
+
+    // then
+    verify(ui).hideProgress()
+    verify(ui).switchToCallPatientView_Old()
+    verify(ui).hideSecureCallUi_Old()
+    verifyNoMoreInteractions(ui)
+  }
+
+  @Test
+  fun `display patient with no phone number layout and render patient details for patient with no phone number`() {
+    // given
+    val patientAddress = "Bhatinda, Punjab"
+    val patientProfile = TestData.patientProfile(patientUuid = patientUuid, generatePhoneNumber = false)
+    val overdueAppointment = TestData.overdueAppointment(
+        facilityUuid = UUID.fromString("a607a97f-4bf6-4ce6-86a3-b266059c7734"),
+        patientUuid = patientUuid,
+        patientAddress = TestData.overduePatientAddress(
+            streetAddress = null,
+            colonyOrVillage = null,
+            district = "Bhatinda",
+            state = "Punjab"),
+        appointmentFacilityName = "Bhatinda",
+        diagnosedWithDiabetes = Answer.Yes,
+        diagnosedWithHypertension = Answer.No
+    )
+
+    // when
+    uiRenderer.render(defaultModel(overdueListChangesFeatureEnabled = true)
+        .overdueAppointmentLoaded(Optional.of(overdueAppointment))
+        .contactPatientInfoLoaded()
+        .patientProfileLoaded(patientProfile))
+
+    // then
+    verify(ui).hideProgress()
+    verify(ui).showPatientWithNoPhoneNumberUi()
+    verify(ui).hidePatientWithPhoneNumberUi()
+    verify(ui).renderPatientDetails(PatientDetails(name = patientProfile.patient.fullName,
+        gender = patientProfile.patient.gender,
+        age = DateOfBirth.fromPatient(patientProfile.patient, clock).estimateAge(clock),
+        phoneNumber = null,
+        patientAddress = patientAddress,
+        registeredFacility = overdueAppointment.appointmentFacilityName!!,
+        diagnosedWithDiabetes = overdueAppointment.diagnosedWithDiabetes,
+        diagnosedWithHypertension = overdueAppointment.diagnosedWithHypertension,
+        lastVisited = overdueAppointment.patientLastSeen))
+    verify(ui).switchToCallPatientView()
+    verify(ui).setResultOfCallLabelText(RESULT)
+    verifyNoMoreInteractions(ui)
+  }
+
+  @Test
+  fun `display patient with phone number layout and render patient details for patient with phone number`() {
+    // given
+    val patientAddress = "Bhatinda, Punjab"
+    val patientProfile = TestData.patientProfile(patientUuid = patientUuid, generatePhoneNumber = true)
+    val overdueAppointment = TestData.overdueAppointment(
+        facilityUuid = UUID.fromString("a607a97f-4bf6-4ce6-86a3-b266059c7734"),
+        patientUuid = patientUuid,
+        patientAddress = TestData.overduePatientAddress(
+            streetAddress = null,
+            colonyOrVillage = null,
+            district = "Bhatinda",
+            state = "Punjab"),
+        appointmentFacilityName = "Bhatinda",
+        diagnosedWithDiabetes = Answer.Yes,
+        diagnosedWithHypertension = Answer.No
+    )
+
+    // when
+    uiRenderer.render(defaultModel(overdueListChangesFeatureEnabled = true, phoneMaskFeatureEnabled = true)
+        .overdueAppointmentLoaded(Optional.of(overdueAppointment))
+        .contactPatientInfoLoaded()
+        .patientProfileLoaded(patientProfile))
+
+    // then
+    verify(ui).hideProgress()
+    verify(ui).showPatientWithPhoneNumberUi()
+    verify(ui).hidePatientWithNoPhoneNumberUi()
+    verify(ui).renderPatientDetails(PatientDetails(name = patientProfile.patient.fullName,
+        gender = patientProfile.patient.gender,
+        age = DateOfBirth.fromPatient(patientProfile.patient, clock).estimateAge(clock),
+        phoneNumber = patientProfile.phoneNumbers.first().number,
+        patientAddress = patientAddress,
+        registeredFacility = overdueAppointment.appointmentFacilityName!!,
+        diagnosedWithDiabetes = overdueAppointment.diagnosedWithDiabetes,
+        diagnosedWithHypertension = overdueAppointment.diagnosedWithHypertension,
+        lastVisited = overdueAppointment.patientLastSeen))
+    verify(ui).showSecureCallUi()
+    verify(ui).switchToCallPatientView()
+    verify(ui).setResultOfCallLabelText(RESULT_OF_CALL)
     verifyNoMoreInteractions(ui)
   }
 
