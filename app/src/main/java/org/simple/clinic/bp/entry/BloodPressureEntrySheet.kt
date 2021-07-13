@@ -178,6 +178,9 @@ class BloodPressureEntrySheet : BottomSheetActivity(), BloodPressureEntryUi, Rem
   private val removeBloodPressureButton
     get() = binding.removeBloodPressureButton
 
+  private val bpDateTextView
+    get() = binding.bpDateTextView
+
   private val changeDateButton
     get() = binding.changeDateButton
 
@@ -464,7 +467,7 @@ class BloodPressureEntrySheet : BottomSheetActivity(), BloodPressureEntryUi, Rem
   }
 
   override fun showBpDate(date: LocalDate) {
-    changeDateButton.text = dateFormatter.format(date)
+    bpDateTextView.text = dateFormatter.format(date)
   }
 
   override fun dismiss() {
