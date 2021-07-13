@@ -114,7 +114,7 @@ class BloodPressureValidationTest {
       onNext(ScreenChanged(BP_ENTRY))
       onNext(SystolicChanged(systolic))
       onNext(DiastolicChanged(diastolic))
-      onNext(BloodPressureDateClicked)
+      onNext(ChangeDateClicked)
     }
 
     verify(ui, never()).showDateEntryScreen()

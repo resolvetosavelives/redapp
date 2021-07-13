@@ -36,7 +36,7 @@ class BloodPressureEntryUpdate(
       is DayChanged -> onDateChanged(model.dayChanged(event.day))
       is MonthChanged -> onDateChanged(model.monthChanged(event.month))
       is YearChanged -> onDateChanged(model.yearChanged(event.fourDigitYear))
-      is BloodPressureDateClicked -> onBloodPressureDateClicked(model)
+      is ChangeDateClicked -> changeDateClicked(model)
       is SaveClicked -> onSaveClicked(model)
       is ShowBpClicked -> showBpClicked(model)
       is BloodPressureSaved -> next(model.bloodPressureStateChanged(NOT_SAVING_BLOOD_PRESSURE), SetBpSavedResultAndFinish)
@@ -99,7 +99,7 @@ class BloodPressureEntryUpdate(
   ): Next<BloodPressureEntryModel, BloodPressureEntryEffect> =
       next(updatedModel, HideDateErrorMessage)
 
-  private fun onBloodPressureDateClicked(
+  private fun changeDateClicked(
       model: BloodPressureEntryModel
   ): Next<BloodPressureEntryModel, BloodPressureEntryEffect> {
     val result = validateEnteredBp(model)

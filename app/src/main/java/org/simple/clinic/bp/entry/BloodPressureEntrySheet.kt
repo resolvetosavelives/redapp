@@ -298,7 +298,7 @@ class BloodPressureEntrySheet : BottomSheetActivity(), BloodPressureEntryUi, Rem
   private fun changeDateButtonClicks(): Observable<UiEvent> =
       changeDateButton
           .clicks()
-          .map { BloodPressureDateClicked }
+          .map { ChangeDateClicked }
 
   private fun backClicks(): Observable<UiEvent> =
       backImageButton
