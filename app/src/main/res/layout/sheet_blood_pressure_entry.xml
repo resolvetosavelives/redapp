@@ -81,6 +81,7 @@
         android:id="@+id/bloodPressureEntryLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_8"
         app:layout_optimizationLevel="direct|barrier">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -187,12 +188,21 @@
         android:id="@+id/bpErrorTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_8"
         android:gravity="center_horizontal"
         android:textAppearance="?attr/textAppearanceBody2"
         android:textColor="?attr/colorError"
         android:visibility="gone"
         tools:text="@string/bloodpressureentry_error_diastolic_180" />
+
+      <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/bpDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/spacing_24"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:textColor="@color/color_on_surface_67"
+        tools:text="13-Jul-2021" />
 
       <com.google.android.material.button.MaterialButton
         android:id="@+id/changeDateButton"
@@ -200,7 +210,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/spacing_8"
         android:text="@string/bloodpressureentry_date_change" />
 
     </LinearLayout>
