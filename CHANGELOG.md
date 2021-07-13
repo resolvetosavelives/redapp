@@ -20,6 +20,7 @@
 
 ### Changes
 - New supported language: Tamil (Sri Lanka) [`ta-LK`], Sinhala [`si-LK`]
+- Show "Change" button in BP and blood sugar entry sheets for changing date
 - [In Progress: 7 Jul 2021] Overdue list improvements
   - Change overdue list UI
   - Load overdue patients without phone number
