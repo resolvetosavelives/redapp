@@ -46,7 +46,7 @@ class BloodSugarEntryUpdate @AssistedInject constructor(
       is MonthChanged -> onDateChanged(model.monthChanged(event.month))
       is YearChanged -> onDateChanged(model.yearChanged(event.fourDigitYear))
       BackPressed -> onBackPressed(model)
-      BloodSugarDateClicked -> onBloodSugarDateClicked(model)
+      ChangeDateClicked -> changeDateClicked(model)
       ShowBloodSugarEntryClicked -> showBloodSugarClicked(model)
       SaveClicked -> onSaveClicked(model)
       is BloodSugarSaved -> next(model.bloodSugarStateChanged(NOT_SAVING_BLOOD_SUGAR), SetBloodSugarSavedResultAndFinish)
@@ -153,7 +153,7 @@ class BloodSugarEntryUpdate @AssistedInject constructor(
     return dispatch(effect)
   }
 
-  private fun onBloodSugarDateClicked(
+  private fun changeDateClicked(
       model: BloodSugarEntryModel
   ): Next<BloodSugarEntryModel, BloodSugarEntryEffect> {
     val bloodSugarReading = createBloodSugarReading(model)

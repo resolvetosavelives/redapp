@@ -281,7 +281,7 @@ class BloodSugarEntrySheet : BottomSheetActivity(), BloodSugarEntryUi, RemoveBlo
 
   private fun changeDateClicks(): Observable<UiEvent> = changeDateButton
       .clicks()
-      .map { BloodSugarDateClicked }
+      .map { ChangeDateClicked }
 
   private fun backClicks(): Observable<UiEvent> = backImageButton
       .clicks()

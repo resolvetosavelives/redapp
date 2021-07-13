@@ -39,7 +39,7 @@ data class DatePrefilled(val prefilledDate: LocalDate) : BloodSugarEntryEvent()
 
 object BackPressed : BloodSugarEntryEvent()
 
-object BloodSugarDateClicked : BloodSugarEntryEvent()
+object ChangeDateClicked : BloodSugarEntryEvent()
 
 object ShowBloodSugarEntryClicked : BloodSugarEntryEvent()
 
