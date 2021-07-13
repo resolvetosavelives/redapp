@@ -59,7 +59,7 @@ import javax.inject.Named
 class BloodPressureEntrySheet : BottomSheetActivity(), BloodPressureEntryUi, RemoveBloodPressureListener {
 
   @Inject
-  @Named("exact_date")
+  @Named("full_date")
   lateinit var dateFormatter: DateTimeFormatter
 
   @Inject
@@ -146,7 +146,7 @@ class BloodPressureEntrySheet : BottomSheetActivity(), BloodPressureEntryUi, Rem
         imeDoneClicks(),
         diastolicBackspaceClicks(),
         removeClicks(),
-        bpDateClicks(),
+        changeDateButtonClicks(),
         backClicks(),
         hardwareBackPresses(),
         screenTypeChanges(),
@@ -178,8 +178,11 @@ class BloodPressureEntrySheet : BottomSheetActivity(), BloodPressureEntryUi, Rem
   private val removeBloodPressureButton
     get() = binding.removeBloodPressureButton
 
-  private val bpDateButton
-    get() = binding.bpDateButton
+  private val bpDateTextView
+    get() = binding.bpDateTextView
+
+  private val changeDateButton
+    get() = binding.changeDateButton
 
   private val backImageButton
     get() = binding.backImageButton
@@ -295,10 +298,10 @@ class BloodPressureEntrySheet : BottomSheetActivity(), BloodPressureEntryUi, Rem
           .clicks()
           .map { RemoveBloodPressureClicked }
 
-  private fun bpDateClicks(): Observable<UiEvent> =
-      bpDateButton
+  private fun changeDateButtonClicks(): Observable<UiEvent> =
+      changeDateButton
           .clicks()
-          .map { BloodPressureDateClicked }
+          .map { ChangeDateClicked }
 
   private fun backClicks(): Observable<UiEvent> =
       backImageButton
@@ -463,8 +466,8 @@ class BloodPressureEntrySheet : BottomSheetActivity(), BloodPressureEntryUi, Rem
     yearEditText.setTextAndCursor(fullYearDateFormatter.format(date))
   }
 
-  override fun showDateOnDateButton(date: LocalDate) {
-    bpDateButton.text = dateFormatter.format(date)
+  override fun showBpDate(date: LocalDate) {
+    bpDateTextView.text = dateFormatter.format(date)
   }
 
   override fun dismiss() {
@@ -474,14 +477,14 @@ class BloodPressureEntrySheet : BottomSheetActivity(), BloodPressureEntryUi, Rem
   override fun showProgress() {
     progressLoader.visibleOrGone(isVisible = true)
     bloodPressureEntryLayout.visibleOrGone(isVisible = false)
-    bpDateButton.visibleOrGone(isVisible = false)
+    changeDateButton.visibleOrGone(isVisible = false)
     removeBloodPressureButton.visibleOrGone(isVisible = false)
   }
 
   override fun hideProgress() {
     progressLoader.visibleOrGone(isVisible = false)
     bloodPressureEntryLayout.visibleOrGone(isVisible = true)
-    bpDateButton.visibleOrGone(isVisible = true)
+    changeDateButton.visibleOrGone(isVisible = true)
     if (removeBloodPressureButton.isEnabled)
       removeBloodPressureButton.visibleOrGone(isVisible = true)
   }

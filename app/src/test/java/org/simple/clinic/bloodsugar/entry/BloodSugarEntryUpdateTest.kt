@@ -165,7 +165,7 @@ class BloodSugarEntryUpdateTest {
   fun `when blood sugar entry is active and value is valid and date button is pressed, then date entry should be shown`() {
     updateSpec
         .given(defaultModel.bloodSugarChanged(validBloodSugar))
-        .whenEvent(BloodSugarDateClicked)
+        .whenEvent(ChangeDateClicked)
         .then(assertThatNext(
             hasNoModel(),
             hasEffects(ShowDateEntryScreen as BloodSugarEntryEffect)
@@ -178,7 +178,7 @@ class BloodSugarEntryUpdateTest {
 
     updateSpec
         .given(defaultModel.bloodSugarChanged(invalidBloodSugar))
-        .whenEvent(BloodSugarDateClicked)
+        .whenEvent(ChangeDateClicked)
         .then(assertThatNext(
             hasNoModel(),
             hasEffects(ShowBloodSugarValidationError(ErrorBloodSugarTooHigh(measurementType), BloodSugarUnitPreference.Mg) as BloodSugarEntryEffect)

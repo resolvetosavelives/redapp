@@ -480,7 +480,7 @@ class BloodPressureEntrySheetLogicTest {
       onNext(ScreenChanged(BP_ENTRY))
       onNext(SystolicChanged("120"))
       onNext(DiastolicChanged("110"))
-      onNext(BloodPressureDateClicked)
+      onNext(ChangeDateClicked)
     }
 
     verify(ui).showDateEntryScreen()
@@ -525,7 +525,7 @@ class BloodPressureEntrySheetLogicTest {
       onNext(ScreenChanged(BP_ENTRY))
       onNext(SystolicChanged(""))
       onNext(DiastolicChanged("80"))
-      onNext(BloodPressureDateClicked)
+      onNext(ChangeDateClicked)
     }
 
     verify(ui).showSystolicEmptyError()
@@ -569,7 +569,7 @@ class BloodPressureEntrySheetLogicTest {
     sheetCreatedForNew(patientUuid)
     uiEvents.onNext(ScreenChanged(BP_ENTRY))
 
-    verify(ui).showDateOnDateButton(today)
+    verify(ui).showBpDate(today)
 
     verify(ui).setDateOnInputFields(today)
     verify(ui).hideRemoveBpButton()
@@ -587,7 +587,7 @@ class BloodPressureEntrySheetLogicTest {
     sheetCreatedForUpdate(bp.uuid)
     uiEvents.onNext(ScreenChanged(BP_ENTRY))
 
-    verify(ui).showDateOnDateButton(recordedDate)
+    verify(ui).showBpDate(recordedDate)
 
     verify(ui).setDateOnInputFields(recordedDate)
     verify(ui).setSystolic(bp.reading.systolic.toString())
@@ -608,7 +608,7 @@ class BloodPressureEntrySheetLogicTest {
       onNext(ScreenChanged(BP_ENTRY))
       onNext(SystolicChanged(systolic))
       onNext(DiastolicChanged(diastolic))
-      onNext(BloodPressureDateClicked)
+      onNext(ChangeDateClicked)
       onNext(ScreenChanged(DATE_ENTRY))
       onNext(DayChanged("1"))
       onNext(MonthChanged("24"))
@@ -633,7 +633,7 @@ class BloodPressureEntrySheetLogicTest {
       onNext(ScreenChanged(BP_ENTRY))
       onNext(SystolicChanged(systolic))
       onNext(DiastolicChanged(diastolic))
-      onNext(BloodPressureDateClicked)
+      onNext(ChangeDateClicked)
       onNext(ScreenChanged(DATE_ENTRY))
       onNext(DayChanged(bpDate.dayOfMonth.toString()))
       onNext(MonthChanged(bpDate.monthValue.toString()))
@@ -644,7 +644,7 @@ class BloodPressureEntrySheetLogicTest {
     }
 
     verify(ui).showBpEntryScreen()
-    verify(ui).showDateOnDateButton(bpDate)
+    verify(ui).showBpDate(bpDate)
     verifyNoMoreInteractions(ui)
   }
 
@@ -658,7 +658,7 @@ class BloodPressureEntrySheetLogicTest {
       onNext(ScreenChanged(BP_ENTRY))
       onNext(SystolicChanged(systolic))
       onNext(DiastolicChanged(diastolic))
-      onNext(BloodPressureDateClicked)
+      onNext(ChangeDateClicked)
       onNext(ScreenChanged(DATE_ENTRY))
       onNext(DayChanged("1"))
       onNext(MonthChanged("24"))
@@ -685,7 +685,7 @@ class BloodPressureEntrySheetLogicTest {
       onNext(ScreenChanged(BP_ENTRY))
       onNext(SystolicChanged(systolic))
       onNext(DiastolicChanged(diastolic))
-      onNext(BloodPressureDateClicked)
+      onNext(ChangeDateClicked)
       onNext(ScreenChanged(DATE_ENTRY))
       onNext(DayChanged("1"))
       onNext(MonthChanged("24"))
@@ -712,7 +712,7 @@ class BloodPressureEntrySheetLogicTest {
       onNext(ScreenChanged(BP_ENTRY))
       onNext(SystolicChanged(systolic))
       onNext(DiastolicChanged(diastolic))
-      onNext(BloodPressureDateClicked)
+      onNext(ChangeDateClicked)
       onNext(ScreenChanged(DATE_ENTRY))
       onNext(DayChanged("1"))
       onNext(MonthChanged("24"))
@@ -737,7 +737,7 @@ class BloodPressureEntrySheetLogicTest {
       onNext(ScreenChanged(BP_ENTRY))
       onNext(SystolicChanged(systolic))
       onNext(DiastolicChanged(diastolic))
-      onNext(BloodPressureDateClicked)
+      onNext(ChangeDateClicked)
       onNext(ScreenChanged(DATE_ENTRY))
       onNext(DayChanged(localDate.dayOfMonth.toString()))
       onNext(MonthChanged(localDate.monthValue.toString()))
@@ -747,7 +747,7 @@ class BloodPressureEntrySheetLogicTest {
       onNext(BackPressed)
     }
 
-    verify(ui).showDateOnDateButton(localDate)
+    verify(ui).showBpDate(localDate)
     verify(ui).showBpEntryScreen()
     verifyNoMoreInteractions(ui)
   }
@@ -763,7 +763,7 @@ class BloodPressureEntrySheetLogicTest {
       onNext(ScreenChanged(BP_ENTRY))
       onNext(SystolicChanged(systolic))
       onNext(DiastolicChanged(diastolic))
-      onNext(BloodPressureDateClicked)
+      onNext(ChangeDateClicked)
       onNext(ScreenChanged(DATE_ENTRY))
       onNext(DayChanged(localDate.dayOfMonth.toString()))
       onNext(MonthChanged(localDate.monthValue.toString()))
@@ -773,7 +773,7 @@ class BloodPressureEntrySheetLogicTest {
       onNext(ShowBpClicked)
     }
 
-    verify(ui).showDateOnDateButton(localDate)
+    verify(ui).showBpDate(localDate)
     verify(ui).showBpEntryScreen()
     verifyNoMoreInteractions(ui)
   }

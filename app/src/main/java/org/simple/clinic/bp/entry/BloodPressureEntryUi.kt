@@ -29,7 +29,7 @@ interface BloodPressureEntryUi {
   fun showDateIsInFutureError()
   fun hideDateErrorMessage()
   fun setDateOnInputFields(date: LocalDate)
-  fun showDateOnDateButton(date: LocalDate)
+  fun showBpDate(date: LocalDate)
   fun dismiss()
   fun showProgress()
   fun hideProgress()

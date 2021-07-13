@@ -94,7 +94,7 @@ class BloodSugarEntrySheet : BottomSheetActivity(), BloodSugarEntryUi, RemoveBlo
   }
 
   @Inject
-  @Named("exact_date")
+  @Named("full_date")
   lateinit var dateFormatter: DateTimeFormatter
 
   @Inject
@@ -155,7 +155,7 @@ class BloodSugarEntrySheet : BottomSheetActivity(), BloodSugarEntryUi, RemoveBlo
     Observable.mergeArray(
         bloodSugarTextChanges(),
         imeDoneClicks(),
-        bloodSugarDateClicks(),
+        changeDateClicks(),
         backClicks(),
         hardwareBackPresses(),
         screenTypeChanges(),
@@ -186,8 +186,11 @@ class BloodSugarEntrySheet : BottomSheetActivity(), BloodSugarEntryUi, RemoveBlo
   private val yearEditText
     get() = binding.yearEditText
 
-  private val bloodSugarDateButton
-    get() = binding.bloodSugarDateButton
+  private val bloodSugarDateTextView
+    get() = binding.bloodSugarDateTextView
+
+  private val changeDateButton
+    get() = binding.changeDateButton
 
   private val backImageButton
     get() = binding.backImageButton
@@ -279,9 +282,9 @@ class BloodSugarEntrySheet : BottomSheetActivity(), BloodSugarEntryUi, RemoveBlo
         .map { SaveClicked }
   }
 
-  private fun bloodSugarDateClicks(): Observable<UiEvent> = bloodSugarDateButton
+  private fun changeDateClicks(): Observable<UiEvent> = changeDateButton
       .clicks()
-      .map { BloodSugarDateClicked }
+      .map { ChangeDateClicked }
 
   private fun backClicks(): Observable<UiEvent> = backImageButton
       .clicks()
@@ -435,8 +438,8 @@ class BloodSugarEntrySheet : BottomSheetActivity(), BloodSugarEntryUi, RemoveBlo
     yearEditText.setTextAndCursor(fullYearDateFormatter.format(date))
   }
 
-  override fun showDateOnDateButton(date: LocalDate) {
-    bloodSugarDateButton.text = dateFormatter.format(date)
+  override fun showBloodSugarDate(date: LocalDate) {
+    bloodSugarDateTextView.text = dateFormatter.format(date)
   }
 
   override fun showEntryTitle(measurementType: BloodSugarMeasurementType) {
@@ -470,13 +473,13 @@ class BloodSugarEntrySheet : BottomSheetActivity(), BloodSugarEntryUi, RemoveBlo
   override fun showProgress() {
     progressLoader.visibleOrGone(isVisible = true)
     bloodSugarReadingLayout.visibleOrGone(isVisible = false)
-    bloodSugarDateButton.visibleOrGone(isVisible = false)
+    changeDateButton.visibleOrGone(isVisible = false)
   }
 
   override fun hideProgress() {
     progressLoader.visibleOrGone(isVisible = false)
     bloodSugarReadingLayout.visibleOrGone(isVisible = true)
-    bloodSugarDateButton.visibleOrGone(isVisible = true)
+    changeDateButton.visibleOrGone(isVisible = true)
   }
 
   override fun setBloodSugarUnitPreferenceLabelToMmol() {

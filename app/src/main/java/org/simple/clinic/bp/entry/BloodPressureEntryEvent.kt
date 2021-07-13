@@ -40,7 +40,7 @@ data class BloodPressureSaved(val wasDateChanged: Boolean) : BloodPressureEntryE
   }
 }
 
-object BloodPressureDateClicked : BloodPressureEntryEvent() {
+object ChangeDateClicked : BloodPressureEntryEvent() {
   override val analyticsName = "Blood Pressure Entry:Next Arrow Clicked"
 }
 

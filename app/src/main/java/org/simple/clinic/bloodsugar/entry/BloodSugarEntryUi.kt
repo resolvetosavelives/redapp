@@ -25,7 +25,7 @@ interface BloodSugarEntryUi {
   fun showDateIsInFutureError()
   fun hideDateErrorMessage()
   fun setDateOnInputFields(date: LocalDate)
-  fun showDateOnDateButton(date: LocalDate)
+  fun showBloodSugarDate(date: LocalDate)
   fun showRemoveButton()
   fun hideRemoveButton()
   fun setBloodSugarReading(bloodSugarReading: String)

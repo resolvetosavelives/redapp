@@ -86,7 +86,7 @@ class BloodPressureEntryEffectHandler @AssistedInject constructor(
           .map(::convertToLocalDate)
           .observeOn(scheduler)
           .doOnNext(ui::setDateOnInputFields)
-          .doOnNext(ui::showDateOnDateButton)
+          .doOnNext(ui::showBpDate)
           .map { DatePrefilled(it) }
     }
   }
@@ -125,7 +125,7 @@ class BloodPressureEntryEffectHandler @AssistedInject constructor(
   private fun showBpEntryScreen(entryDate: LocalDate) {
     with(ui) {
       showBpEntryScreen()
-      showDateOnDateButton(entryDate)
+      showBpDate(entryDate)
     }
   }
 
