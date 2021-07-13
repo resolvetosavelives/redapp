@@ -89,6 +89,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_16"
+        android:layout_marginBottom="@dimen/spacing_8"
         app:layout_optimizationLevel="direct|barrier">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -163,7 +164,6 @@
         android:id="@+id/bloodSugarErrorTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_8"
         android:gravity="center_horizontal"
         android:textAppearance="?attr/textAppearanceBody2"
         android:textColor="?attr/colorError"
@@ -171,13 +171,12 @@
         tools:text="@string/bloodsugarentry_error_lower_limit" />
 
       <com.google.android.material.button.MaterialButton
-        android:id="@+id/bloodSugarDateButton"
+        android:id="@+id/changeDateButton"
         style="?attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/spacing_8"
-        tools:text="6 December, 2019" />
+        android:text="@string/bloodsugarentry_date_change" />
 
     </LinearLayout>
 

@@ -155,7 +155,7 @@ class BloodSugarEntrySheet : BottomSheetActivity(), BloodSugarEntryUi, RemoveBlo
     Observable.mergeArray(
         bloodSugarTextChanges(),
         imeDoneClicks(),
-        bloodSugarDateClicks(),
+        changeDateClicks(),
         backClicks(),
         hardwareBackPresses(),
         screenTypeChanges(),
@@ -186,8 +186,8 @@ class BloodSugarEntrySheet : BottomSheetActivity(), BloodSugarEntryUi, RemoveBlo
   private val yearEditText
     get() = binding.yearEditText
 
-  private val bloodSugarDateButton
-    get() = binding.bloodSugarDateButton
+  private val changeDateButton
+    get() = binding.changeDateButton
 
   private val backImageButton
     get() = binding.backImageButton
@@ -279,7 +279,7 @@ class BloodSugarEntrySheet : BottomSheetActivity(), BloodSugarEntryUi, RemoveBlo
         .map { SaveClicked }
   }
 
-  private fun bloodSugarDateClicks(): Observable<UiEvent> = bloodSugarDateButton
+  private fun changeDateClicks(): Observable<UiEvent> = changeDateButton
       .clicks()
       .map { BloodSugarDateClicked }
 
@@ -436,7 +436,7 @@ class BloodSugarEntrySheet : BottomSheetActivity(), BloodSugarEntryUi, RemoveBlo
   }
 
   override fun showDateOnDateButton(date: LocalDate) {
-    bloodSugarDateButton.text = dateFormatter.format(date)
+    changeDateButton.text = dateFormatter.format(date)
   }
 
   override fun showEntryTitle(measurementType: BloodSugarMeasurementType) {
@@ -470,13 +470,13 @@ class BloodSugarEntrySheet : BottomSheetActivity(), BloodSugarEntryUi, RemoveBlo
   override fun showProgress() {
     progressLoader.visibleOrGone(isVisible = true)
     bloodSugarReadingLayout.visibleOrGone(isVisible = false)
-    bloodSugarDateButton.visibleOrGone(isVisible = false)
+    changeDateButton.visibleOrGone(isVisible = false)
   }
 
   override fun hideProgress() {
     progressLoader.visibleOrGone(isVisible = false)
     bloodSugarReadingLayout.visibleOrGone(isVisible = true)
-    bloodSugarDateButton.visibleOrGone(isVisible = true)
+    changeDateButton.visibleOrGone(isVisible = true)
   }
 
   override fun setBloodSugarUnitPreferenceLabelToMmol() {

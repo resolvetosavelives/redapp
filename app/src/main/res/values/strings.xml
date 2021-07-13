@@ -533,6 +533,7 @@
   <string name="bloodsugarentry_edit_post_prandial_title">Edit post prandial blood sugar</string>
   <string name="bloodsugarentry_edit_fasting_title">Edit fasting blood sugar</string>
   <string name="bloodsugarentry_edit_hba1c_title">Edit HbA1c</string>
+  <string name="bloodsugarentry_date_change">Change</string>
 
   <!-- Confirm remove blood sugar dialog -->
   <string name="bloodsugarentry_remove_blood_sugar_title">Remove Blood Sugar</string>
