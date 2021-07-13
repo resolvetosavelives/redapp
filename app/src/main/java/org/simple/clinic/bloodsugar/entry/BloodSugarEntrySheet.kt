@@ -94,7 +94,7 @@ class BloodSugarEntrySheet : BottomSheetActivity(), BloodSugarEntryUi, RemoveBlo
   }
 
   @Inject
-  @Named("exact_date")
+  @Named("full_date")
   lateinit var dateFormatter: DateTimeFormatter
 
   @Inject
