@@ -463,7 +463,7 @@ class BloodPressureEntrySheet : BottomSheetActivity(), BloodPressureEntryUi, Rem
     yearEditText.setTextAndCursor(fullYearDateFormatter.format(date))
   }
 
-  override fun showDateOnDateButton(date: LocalDate) {
+  override fun showBpDate(date: LocalDate) {
     changeDateButton.text = dateFormatter.format(date)
   }
 
