@@ -175,6 +175,7 @@
   <string name="bloodpressureentry_remove_bp_message">Are you sure you want to remove this blood pressure recording?</string>
   <string name="bloodpressureentry_remove_bp_confirm">Remove</string>
   <string name="bloodpressureentry_remove_bp_cancel">Cancel</string>
+  <string name="bloodpressureentry_date_change">Change</string>
 
   <!-- Patient summary -->
   <string name="patientsummary_contentdescription_up_button">Go back</string>

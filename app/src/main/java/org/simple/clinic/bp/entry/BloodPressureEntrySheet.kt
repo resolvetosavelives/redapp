@@ -146,7 +146,7 @@ class BloodPressureEntrySheet : BottomSheetActivity(), BloodPressureEntryUi, Rem
         imeDoneClicks(),
         diastolicBackspaceClicks(),
         removeClicks(),
-        bpDateClicks(),
+        changeDateButtonClicks(),
         backClicks(),
         hardwareBackPresses(),
         screenTypeChanges(),
@@ -178,8 +178,8 @@ class BloodPressureEntrySheet : BottomSheetActivity(), BloodPressureEntryUi, Rem
   private val removeBloodPressureButton
     get() = binding.removeBloodPressureButton
 
-  private val bpDateButton
-    get() = binding.bpDateButton
+  private val changeDateButton
+    get() = binding.changeDateButton
 
   private val backImageButton
     get() = binding.backImageButton
@@ -295,8 +295,8 @@ class BloodPressureEntrySheet : BottomSheetActivity(), BloodPressureEntryUi, Rem
           .clicks()
           .map { RemoveBloodPressureClicked }
 
-  private fun bpDateClicks(): Observable<UiEvent> =
-      bpDateButton
+  private fun changeDateButtonClicks(): Observable<UiEvent> =
+      changeDateButton
           .clicks()
           .map { BloodPressureDateClicked }
 
@@ -464,7 +464,7 @@ class BloodPressureEntrySheet : BottomSheetActivity(), BloodPressureEntryUi, Rem
   }
 
   override fun showDateOnDateButton(date: LocalDate) {
-    bpDateButton.text = dateFormatter.format(date)
+    changeDateButton.text = dateFormatter.format(date)
   }
 
   override fun dismiss() {
@@ -474,14 +474,14 @@ class BloodPressureEntrySheet : BottomSheetActivity(), BloodPressureEntryUi, Rem
   override fun showProgress() {
     progressLoader.visibleOrGone(isVisible = true)
     bloodPressureEntryLayout.visibleOrGone(isVisible = false)
-    bpDateButton.visibleOrGone(isVisible = false)
+    changeDateButton.visibleOrGone(isVisible = false)
     removeBloodPressureButton.visibleOrGone(isVisible = false)
   }
 
   override fun hideProgress() {
     progressLoader.visibleOrGone(isVisible = false)
     bloodPressureEntryLayout.visibleOrGone(isVisible = true)
-    bpDateButton.visibleOrGone(isVisible = true)
+    changeDateButton.visibleOrGone(isVisible = true)
     if (removeBloodPressureButton.isEnabled)
       removeBloodPressureButton.visibleOrGone(isVisible = true)
   }

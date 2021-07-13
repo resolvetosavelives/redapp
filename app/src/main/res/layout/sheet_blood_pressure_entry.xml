@@ -195,13 +195,13 @@
         tools:text="@string/bloodpressureentry_error_diastolic_180" />
 
       <com.google.android.material.button.MaterialButton
-        android:id="@+id/bpDateButton"
+        android:id="@+id/changeDateButton"
         style="?attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/spacing_8"
-        tools:text="6 December, 2019" />
+        android:text="@string/bloodpressureentry_date_change" />
 
     </LinearLayout>
 
