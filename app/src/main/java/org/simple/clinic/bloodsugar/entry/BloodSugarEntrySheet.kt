@@ -186,6 +186,9 @@ class BloodSugarEntrySheet : BottomSheetActivity(), BloodSugarEntryUi, RemoveBlo
   private val yearEditText
     get() = binding.yearEditText
 
+  private val bloodSugarDateTextView
+    get() = binding.bloodSugarDateTextView
+
   private val changeDateButton
     get() = binding.changeDateButton
 
@@ -436,7 +439,7 @@ class BloodSugarEntrySheet : BottomSheetActivity(), BloodSugarEntryUi, RemoveBlo
   }
 
   override fun showBloodSugarDate(date: LocalDate) {
-    changeDateButton.text = dateFormatter.format(date)
+    bloodSugarDateTextView.text = dateFormatter.format(date)
   }
 
   override fun showEntryTitle(measurementType: BloodSugarMeasurementType) {
