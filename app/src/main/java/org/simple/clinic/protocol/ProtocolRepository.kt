@@ -137,14 +137,15 @@ class ProtocolRepository @Inject constructor(
         ProtocolDrugAndDosages(
             drugName = "Amlodipine",
             drugs = listOf(
+                protocolDrug(UUID.fromString("cfe36b5e-fd3f-4f2e-ab95-fee4e1b8a65b"), "Amlodipine", "2.5mg", "329527"),
                 protocolDrug(UUID.fromString("66eb8414-423b-46c4-bfe4-dfbd25c61b29"), "Amlodipine", "5mg", "329528"),
                 protocolDrug(UUID.fromString("33fcc80d-d791-4529-9998-8eb2e1980e7e"), "Amlodipine", "10mg", "329526")
             )),
         ProtocolDrugAndDosages(
-            drugName = "Telmisartan",
+            drugName = "Aspirin",
             drugs = listOf(
-                protocolDrug(UUID.fromString("25529619-e224-494c-8098-d353747c0493"), "Telmisartan", "40mg", "316764"),
-                protocolDrug(UUID.fromString("f2e15c0e-7d6e-4ca3-9153-596bdf4da839"), "Telmisartan", "80mg", "316765")
+                protocolDrug(UUID.fromString("360df3c1-d00f-412a-9c71-bc58285f94e4"), "Aspirin", "75mg", "315429"),
+                protocolDrug(UUID.fromString("7a01d999-57d5-407d-a0a6-b74e28d7b3d0"), "Aspirin", "150mg", "315413")
             )),
         ProtocolDrugAndDosages(
             drugName = "Chlorthalidone",
@@ -153,35 +154,32 @@ class ProtocolRepository @Inject constructor(
                 protocolDrug(UUID.fromString("a2fb1e94-e76e-452b-8569-5ba06ac5a418"), "Chlorthalidone", "25mg", "315655")
             )),
         ProtocolDrugAndDosages(
-            drugName = "Losartan",
-            drugs = listOf(
-                protocolDrug(UUID.fromString("320b50ed-d424-47c3-b1a7-4ef6a8e22c80"), "Losartan", "50mg", "979467"),
-                protocolDrug(UUID.fromString("06f2934b-5b02-4a6b-ae04-71eef8de02ef"), "Losartan", "100mg", "979463")
-            )),
-        ProtocolDrugAndDosages(
-            drugName = "Atenolol",
-            drugs = listOf(
-                protocolDrug(UUID.fromString("40d57e31-f209-4a48-86d6-6145031727e3"), "Atenolol", "25mg", "315437"),
-                protocolDrug(UUID.fromString("f40dd335-534d-471d-a77e-ed0622e0a521"), "Atenolol", "50mg", "315438")
-            )),
-        ProtocolDrugAndDosages(
             drugName = "Hydrochlorothiazide",
             drugs = listOf(
                 protocolDrug(UUID.fromString("875580d7-74d9-49e7-89f0-4d8d9df40021"), "Hydrochlorothiazide", "12.5mg", "316047"),
-                protocolDrug(UUID.fromString("3790002a-3093-4e42-bea2-3c4d893783ba"), "Hydrochlorothiazide", "25mg", "316049")
+                protocolDrug(UUID.fromString("3790002a-3093-4e42-bea2-3c4d893783ba"), "Hydrochlorothiazide", "25mg", "316049"),
+                protocolDrug(UUID.fromString("767744d0-0cee-406c-8981-0084334703b1"), "Hydrochlorothiazide", "50mg", "316051")
             )),
         ProtocolDrugAndDosages(
-            drugName = "Aspirin",
+            drugName = "Losartan",
             drugs = listOf(
-                protocolDrug(UUID.fromString("360df3c1-d00f-412a-9c71-bc58285f94e4"), "Aspirin", "75mg", "315429"),
-                protocolDrug(UUID.fromString("7a01d999-57d5-407d-a0a6-b74e28d7b3d0"), "Aspirin", "81mg", "315413")
+                protocolDrug(UUID.fromString("320b50ed-d424-47c3-b1a7-4ef6a8e22c80"), "Losartan", "25mg", "979484"),
+                protocolDrug(UUID.fromString("959db212-61f2-4bb4-8f0c-1d2300749c51"), "Losartan", "50mg", "979467"),
+                protocolDrug(UUID.fromString("06f2934b-5b02-4a6b-ae04-71eef8de02ef"), "Losartan", "100mg", "979463")
             )),
         ProtocolDrugAndDosages(
-            drugName = "Enalapril",
+            drugName = "Losartan-Hydrochlorathlazide",
             drugs = listOf(
-                protocolDrug(UUID.fromString("4c9e783c-6f5f-4288-b6e2-bb6329c9010f"), "Enalapril", "20mg", "858809"),
-                protocolDrug(UUID.fromString("ed3eb714-15b5-4ca5-b4d9-54a210d980ff"), "Enalapril", "40mg", "")
-            ))
+                protocolDrug(UUID.fromString("a7e42838-2ade-4012-9b62-ffb838f25a37"), "Losartan-Hydrochlorathiazide", "50mg/12.5mg", "979468"),
+                protocolDrug(UUID.fromString("e5d938e5-95c9-4f7e-9aa6-f13845cba19c"), "Losartan-Hydrochlorathiazide", "100mg/25mg", "979471")
+            )),
+        ProtocolDrugAndDosages(
+            drugName = "Telmisartan",
+            drugs = listOf(
+                protocolDrug(UUID.fromString("e301b7ab-0bf4-4879-a07d-f3641910e3dd"), "Telmisartan", "20mg", "331555"),
+                protocolDrug(UUID.fromString("25529619-e224-494c-8098-d353747c0493"), "Telmisartan", "40mg", "316764"),
+                protocolDrug(UUID.fromString("f2e15c0e-7d6e-4ca3-9153-596bdf4da839"), "Telmisartan", "80mg", "316765")
+            )),
     )
   }
 }
