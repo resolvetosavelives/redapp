@@ -162,7 +162,7 @@ class BloodSugarEntryEffectHandlerTest {
 
     // then
     verify(ui).showBloodSugarEntryScreen()
-    verify(ui).showDateOnDateButton(bloodSugarDate)
+    verify(ui).showBloodSugarDate(bloodSugarDate)
     verifyNoMoreInteractions(ui)
   }
 
@@ -178,7 +178,7 @@ class BloodSugarEntryEffectHandlerTest {
     // then
     testCase.assertOutgoingEvents(DatePrefilled(entryDate))
     verify(ui).setDateOnInputFields(entryDate)
-    verify(ui).showDateOnDateButton(entryDate)
+    verify(ui).showBloodSugarDate(entryDate)
     verifyNoMoreInteractions(ui)
   }
 
@@ -194,7 +194,7 @@ class BloodSugarEntryEffectHandlerTest {
     // then
     testCase.assertOutgoingEvents(DatePrefilled(entryDate))
     verify(ui).setDateOnInputFields(entryDate)
-    verify(ui).showDateOnDateButton(entryDate)
+    verify(ui).showBloodSugarDate(entryDate)
     verifyNoMoreInteractions(ui)
   }
 

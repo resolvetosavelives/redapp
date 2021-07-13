@@ -435,7 +435,7 @@ class BloodSugarEntrySheet : BottomSheetActivity(), BloodSugarEntryUi, RemoveBlo
     yearEditText.setTextAndCursor(fullYearDateFormatter.format(date))
   }
 
-  override fun showDateOnDateButton(date: LocalDate) {
+  override fun showBloodSugarDate(date: LocalDate) {
     changeDateButton.text = dateFormatter.format(date)
   }
 

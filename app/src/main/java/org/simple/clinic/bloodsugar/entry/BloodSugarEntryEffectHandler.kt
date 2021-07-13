@@ -114,7 +114,7 @@ class BloodSugarEntryEffectHandler @AssistedInject constructor(
   private fun showBloodSugarEntryScreen(date: LocalDate) {
     with(ui) {
       showBloodSugarEntryScreen()
-      showDateOnDateButton(date)
+      showBloodSugarDate(date)
     }
   }
 
@@ -124,7 +124,7 @@ class BloodSugarEntryEffectHandler @AssistedInject constructor(
           .map(::convertToLocalDate)
           .observeOn(scheduler)
           .doOnNext(ui::setDateOnInputFields)
-          .doOnNext(ui::showDateOnDateButton)
+          .doOnNext(ui::showBloodSugarDate)
           .map { DatePrefilled(it) }
     }
   }
