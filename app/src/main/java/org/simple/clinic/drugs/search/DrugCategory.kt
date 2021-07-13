@@ -1,4 +1,4 @@
-package org.simple.clinic.drugs
+package org.simple.clinic.drugs.search
 
 import androidx.annotation.VisibleForTesting
 import androidx.room.TypeConverter

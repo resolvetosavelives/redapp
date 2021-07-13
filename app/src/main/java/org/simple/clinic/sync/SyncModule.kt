@@ -12,6 +12,7 @@ import org.simple.clinic.bp.di.BloodPressureModule
 import org.simple.clinic.bp.sync.BloodPressureSync
 import org.simple.clinic.drugs.PrescriptionModule
 import org.simple.clinic.drugs.PrescriptionRepository
+import org.simple.clinic.drugs.search.DrugModule
 import org.simple.clinic.drugs.sync.PrescriptionSync
 import org.simple.clinic.facility.FacilityModule
 import org.simple.clinic.facility.FacilitySync
@@ -52,7 +53,8 @@ import javax.inject.Named
   BloodSugarModule::class,
   ProtocolModule::class,
   ReportsModule::class,
-  HelpModule::class])
+  HelpModule::class,
+  DrugModule::class])
 class SyncModule {
 
   @Provides

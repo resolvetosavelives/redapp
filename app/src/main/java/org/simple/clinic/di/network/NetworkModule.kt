@@ -8,6 +8,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.simple.clinic.bloodsugar.BloodSugarMeasurementType
 import org.simple.clinic.di.AppScope
+import org.simple.clinic.drugs.search.DrugCategory
 import org.simple.clinic.medicalhistory.Answer
 import org.simple.clinic.overdue.Appointment
 import org.simple.clinic.overdue.AppointmentCancelReason
@@ -35,6 +36,7 @@ import org.simple.clinic.util.moshi.MoshiOptionalAdapterFactory
 import org.simple.clinic.util.moshi.URIMoshiAdapter
 import org.simple.clinic.util.moshi.UuidMoshiAdapter
 import java.util.concurrent.TimeUnit
+import org.simple.clinic.drugs.search.Answer as DrugAnswer
 import org.simple.clinic.teleconsultlog.teleconsultrecord.Answer as TeleconsultAnswer
 
 @Module
@@ -71,6 +73,8 @@ class NetworkModule {
         .add(IndiaNHIDGender.MoshiTypeAdapter())
         .add(DurationFromSecondsMoshiAdapter())
         .add(RetentionType::class.java, EnumJsonAdapter.create(RetentionType::class.java).withUnknownFallback(RetentionType.Unknown))
+        .add(DrugCategory.MoshiTypeConverter())
+        .add(DrugAnswer.MoshiTypeAdapter())
         .build()
 
     val patientPayloadNullSerializingAdapter = moshi.adapter(PatientPayload::class.java).serializeNulls()

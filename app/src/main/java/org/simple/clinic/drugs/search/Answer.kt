@@ -1,4 +1,4 @@
-package org.simple.clinic.drugs
+package org.simple.clinic.drugs.search
 
 import android.os.Parcelable
 import androidx.annotation.VisibleForTesting

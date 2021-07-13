@@ -8,9 +8,9 @@ import androidx.room.TypeConverters
 import org.simple.clinic.bloodsugar.BloodSugarMeasurement
 import org.simple.clinic.bloodsugar.BloodSugarMeasurementType
 import org.simple.clinic.bp.BloodPressureMeasurement
-import org.simple.clinic.drugs.Drug
-import org.simple.clinic.drugs.DrugCategory
 import org.simple.clinic.drugs.PrescribedDrug
+import org.simple.clinic.drugs.search.Drug
+import org.simple.clinic.drugs.search.DrugCategory
 import org.simple.clinic.facility.Facility
 import org.simple.clinic.home.overdue.OverdueAppointment
 import org.simple.clinic.medicalhistory.Answer
@@ -51,12 +51,11 @@ import org.simple.clinic.teleconsultlog.teleconsultrecord.TeleconsultationType
 import org.simple.clinic.user.OngoingLoginEntry
 import org.simple.clinic.user.User
 import org.simple.clinic.user.UserStatus
-import org.simple.clinic.util.UserClock
 import org.simple.clinic.util.room.InstantRoomTypeConverter
 import org.simple.clinic.util.room.LocalDateRoomTypeConverter
 import org.simple.clinic.util.room.UuidRoomTypeConverter
 import java.time.Instant
-import org.simple.clinic.drugs.Answer as DrugAnswer
+import org.simple.clinic.drugs.search.Answer as DrugAnswer
 
 @Database(
     entities = [
@@ -164,6 +163,8 @@ abstract class AppDatabase : RoomDatabase() {
   abstract fun teleconsultFacilityWithMedicalOfficersDao(): TeleconsultationFacilityWithMedicalOfficers.RoomDao
 
   abstract fun teleconsultRecordDao(): TeleconsultRecord.RoomDao
+
+  abstract fun drugDao(): Drug.RoomDao
 
   fun clearAppData() {
     runInTransaction {

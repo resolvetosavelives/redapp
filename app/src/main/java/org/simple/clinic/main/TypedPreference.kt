@@ -10,6 +10,7 @@ annotation class TypedPreference(val value: Type) {
     FallbackCountry,
     DatabaseMaintenanceRunAt,
     MedicalRegistrationId,
-    FacilitySyncGroupSwitchedAt
+    FacilitySyncGroupSwitchedAt,
+    LastDrugPullToken
   }
 }

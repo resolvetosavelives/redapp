@@ -11,6 +11,10 @@ import org.simple.clinic.bp.BloodPressureMeasurement
 import org.simple.clinic.bp.BloodPressureReading
 import org.simple.clinic.bp.sync.BloodPressureMeasurementPayload
 import org.simple.clinic.drugs.PrescribedDrug
+import org.simple.clinic.drugs.search.Answer.Yes
+import org.simple.clinic.drugs.search.Drug
+import org.simple.clinic.drugs.search.DrugCategory
+import org.simple.clinic.drugs.search.DrugCategory.Hypertension.CCB
 import org.simple.clinic.drugs.sync.PrescribedDrugPayload
 import org.simple.clinic.facility.Facility
 import org.simple.clinic.facility.FacilityConfig
@@ -62,6 +66,7 @@ import org.simple.clinic.summary.teleconsultation.sync.TeleconsultationFacilityI
 import org.simple.clinic.summary.teleconsultation.sync.TeleconsultationFacilityMedicalOfficersCrossRef
 import org.simple.clinic.summary.teleconsultation.sync.TeleconsultationFacilityWithMedicalOfficers
 import org.simple.clinic.teleconsultlog.medicinefrequency.MedicineFrequency
+import org.simple.clinic.teleconsultlog.medicinefrequency.MedicineFrequency.OD
 import org.simple.clinic.teleconsultlog.teleconsultrecord.TeleconsultRecord
 import org.simple.clinic.teleconsultlog.teleconsultrecord.TeleconsultRecordInfo
 import org.simple.clinic.teleconsultlog.teleconsultrecord.TeleconsultRequestInfo
@@ -85,6 +90,7 @@ import java.time.LocalDate
 import java.time.ZoneOffset.UTC
 import java.util.UUID
 import kotlin.random.nextInt
+import org.simple.clinic.drugs.search.Answer as DrugAnswer
 import org.simple.clinic.teleconsultlog.teleconsultrecord.Answer as TeleconsultRecordAnswer
 
 object TestData {
@@ -1248,5 +1254,35 @@ object TestData {
       district = district,
       dateOfBirth = dateOfBirth,
       address = address
+  )
+
+  fun drug(
+      id: UUID = UUID.randomUUID(),
+      name: String = "Amolodipine",
+      category: DrugCategory? = CCB,
+      frequency: MedicineFrequency? = OD,
+      composition: String? = null,
+      dosage: String? = "10 mg",
+      rxNormCode: String? = "329526",
+      protocol: DrugAnswer = Yes,
+      common: DrugAnswer = Yes,
+      createdAt: Instant = Instant.parse("2018-01-01T00:00:00Z"),
+      updatedAt: Instant = Instant.parse("2018-01-01T00:00:00Z"),
+      deletedAt: Instant? = null
+  ) = Drug(
+      id = id,
+      name = name,
+      category = category,
+      frequency = frequency,
+      composition = composition,
+      dosage = dosage,
+      rxNormCode = rxNormCode,
+      protocol = protocol,
+      common = common,
+      timestamps = Timestamps(
+          createdAt = createdAt,
+          updatedAt = updatedAt,
+          deletedAt = deletedAt
+      )
   )
 }
