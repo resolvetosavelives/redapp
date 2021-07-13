@@ -170,6 +170,16 @@
         android:visibility="gone"
         tools:text="@string/bloodsugarentry_error_lower_limit" />
 
+      <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/bloodSugarDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/spacing_24"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:textColor="@color/color_on_surface_67"
+        tools:text="13-Jul-2021" />
+
       <com.google.android.material.button.MaterialButton
         android:id="@+id/changeDateButton"
         style="?attr/borderlessButtonStyle"
